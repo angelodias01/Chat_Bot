@@ -84,14 +84,14 @@ public class RegisterActivity extends AppCompatActivity {
                     handlers.post(() -> {
                         if(Objects.equals(username, "")|| Objects.equals(password, "")){
                             if(Objects.equals(username, "")){
-                                tbUsername.setError("Please insert your username!");
+                                tbUsername.setError("Introduza o seu nome de utilizador!");
                                 tbUsername.requestFocus();
                              }else if(Objects.equals(password, "")){
-                                tbPassword.setError("Please insert your password!");
+                                tbPassword.setError("Introduza a sua palavra-passe!");
                                 tbPassword.requestFocus();
                             }
                         }else{
-                            Toast.makeText(RegisterActivity.this, "Account Created!",
+                            Toast.makeText(RegisterActivity.this, "Conta criada com êxito!",
                                     Toast.LENGTH_SHORT).show();
                             User newUser = new User(username,password);
                             AppDatabase.getInstance(RegisterActivity.this).getUserDao().insertAll(newUser);

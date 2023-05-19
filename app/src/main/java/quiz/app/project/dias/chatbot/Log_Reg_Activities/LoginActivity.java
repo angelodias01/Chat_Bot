@@ -94,26 +94,26 @@ public class LoginActivity extends AppCompatActivity {
                     // Post a runnable on the main/UI thread
                     handlers.post(() -> {
                         if (user != null) {
-                            Toast.makeText(LoginActivity.this, "Login Successful!",
+                            Toast.makeText(LoginActivity.this, "Início de sessão com êxito!",
                                     Toast.LENGTH_SHORT).show();
                             executor.shutdown();
                             Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
                             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle();
-                            finish();
                             LoginActivity.this.startActivity(intent, bundle);
+                            finish();
 
                         } else {
-                            Toast.makeText(LoginActivity.this, "Email and Password didn't match!",
+                            Toast.makeText(LoginActivity.this, "O nome de utilizador e a palavra-passe não correspondem!",
                                     Toast.LENGTH_SHORT).show();
                             if (username.equals("")) {
-                                tbUsername.setError("Please insert your email!");
+                                tbUsername.setError("Introduza o seu nome de utilizador!");
                                 tbUsername.requestFocus();
                             } else if (password.equals("")) {
-                                tbPassword.setError("Please insert your password!");
+                                tbPassword.setError("Introduza a sua palavra-passe!");
                                 tbPassword.requestFocus();
                             } else {
-                                tbUsername.setError("Email and password didn't match!");
-                                tbPassword.setError("Email and password didn't match!");
+                                tbUsername.setError("O nome de utilizador e a palavra-passe não correspondem!");
+                                tbPassword.setError("O nome de utilizador e a palavra-passe não correspondem!");
                                 tbUsername.requestFocus();
                             }
                         }
