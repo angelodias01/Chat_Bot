@@ -27,10 +27,7 @@ import quiz.app.project.dias.chatbot.R;
 public class RegisterActivity extends AppCompatActivity {
     private static final String userId = "userId";
     private EditText tbUsername, tbPassword;
-    private Button btnRegister;
     private String username, password, restoreUsername, restorePassword;
-    private Intent intent;
-    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,22 +65,19 @@ public class RegisterActivity extends AppCompatActivity {
 
         lblLogin.setOnClickListener(view1 -> {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(RegisterActivity.this).toBundle();
             startActivity(intent, bundle);
         });
 
-        this.btnRegister.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Database code
-                AppDatabase db = Room.databaseBuilder(RegisterActivity.this, AppDatabase.class, "AppDatabase").build();
-                UserDao userDao = db.getUserDao();
-
                 username = tbUsername.getText().toString();
                 password = tbPassword.getText().toString();
+
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.execute(() -> {
-                    // Create a handler associated with the main/UI thread
                     Handler handlers = new Handler(Looper.getMainLooper());
 
                     // Post a runnable on the main/UI thread
@@ -97,13 +91,14 @@ public class RegisterActivity extends AppCompatActivity {
                                 tbPassword.requestFocus();
                             }
                         }else{
-                                Toast.makeText(RegisterActivity.this, "Account Created!",
-                                        Toast.LENGTH_SHORT).show();
-                                executor.shutdown();
-                                User newUser = new User(username,password);
-                                AppDatabase.getInstance(RegisterActivity.this).getUserDao().insertAll(newUser);
+                            Toast.makeText(RegisterActivity.this, "Account Created!",
+                                    Toast.LENGTH_SHORT).show();
+                            User newUser = new User(username,password);
+                            AppDatabase.getInstance(RegisterActivity.this).getUserDao().insertAll(newUser);
+                            executor.shutdown();
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(RegisterActivity.this).toBundle();
+                            finish();
                             startActivity(intent, bundle);
                         }
                     });

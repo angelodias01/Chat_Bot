@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private String username, password, restoreUsername, restorePassword;
     private Intent intent;
-    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,19 +64,22 @@ public class LoginActivity extends AppCompatActivity {
         this.btnLogin = findViewById(R.id.btnRegister);
         tbUsername = findViewById(R.id.tbUsername);
         tbPassword = findViewById(R.id.tbPassword);
-        TextView lblCreateOne = findViewById(R.id.lblCreateOne);
+        TextView lblCreateAcc = findViewById(R.id.lblCreateAcc);
 
-        lblCreateOne.setOnClickListener(view1 -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
-            startActivity(intent, bundle);
+        lblCreateAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle();
+                startActivity(intent, bundle);
+            }
         });
 
-        this.btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Database code
-                AppDatabase db = Room.databaseBuilder(LoginActivity.this, AppDatabase.class, "AppDatabase").build();
+                AppDatabase db = Room.databaseBuilder(LoginActivity.this, AppDatabase.class,"AppDatabase").build();
                 UserDao userDao = db.getUserDao();
 
                 username = tbUsername.getText().toString();
@@ -94,10 +98,10 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             executor.shutdown();
                             Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
-                            startActivity(intent);
-                            bundle = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle();
+                            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle();
+                            finish();
                             LoginActivity.this.startActivity(intent, bundle);
-                            finishActivity(1);
+
                         } else {
                             Toast.makeText(LoginActivity.this, "Email and Password didn't match!",
                                     Toast.LENGTH_SHORT).show();
@@ -121,8 +125,17 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        new AlertDialog.Builder(this)
+                .setTitle("Deseja sair da aplicação?")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Não", null)
+                .show();
     }
 
 }

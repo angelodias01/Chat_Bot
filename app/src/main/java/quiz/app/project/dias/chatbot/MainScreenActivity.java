@@ -2,6 +2,7 @@ package quiz.app.project.dias.chatbot;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.room.Room;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
@@ -10,11 +11,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import java.util.List;
+
+import quiz.app.project.dias.chatbot.Database.AppDatabase;
+import quiz.app.project.dias.chatbot.Database.User;
+import quiz.app.project.dias.chatbot.Database.UserDao;
 import quiz.app.project.dias.chatbot.Log_Reg_Activities.LoginActivity;
 
 public class MainScreenActivity extends AppCompatActivity {
     public static final int delay = 1000;
     public static final Handler handler = new Handler();
+    private List<User> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +38,8 @@ public class MainScreenActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
             this.startActivity(intent, bundle);
+            finish();
         }, delay);
     }
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Do You Want To Exit The App?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }
+
 }

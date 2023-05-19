@@ -9,12 +9,9 @@ import androidx.room.PrimaryKey;
 public class User {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "userId")
-    @NonNull
     private int userId;
-    @NonNull
     @ColumnInfo(name = "username")
     private String username;
-    @NonNull
     @ColumnInfo(name = "password")
     private String password;
 

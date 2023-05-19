@@ -16,13 +16,13 @@ public abstract class AppDatabase extends RoomDatabase {
     public static synchronized AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "QuizDatabase").allowMainThreadQueries()
+                            AppDatabase.class, "AppDatabase").allowMainThreadQueries()
                     .addCallback(new Callback() {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
                             super.onCreate(db);
                             //code not working!!!
-                            db.execSQL("INSERT INTO User VALUES (1, 'admin','admin')");
+                            db.execSQL("INSERT INTO User VALUES (1, 'admin', 'admin')");
                         }
                     })
                     .build();
