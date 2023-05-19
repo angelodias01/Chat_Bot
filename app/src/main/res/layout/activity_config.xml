@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".Database.ConfigActivity">
+    tools:context=".ConfigActivity">
 
     <ImageView
         android:id="@+id/imageView6"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:text="Apagar todos os dados"
+        android:text="Limpar todas as mensagens"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,11 +30,11 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnLimpar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Apagar"
+        android:text="Limpar"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
