@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Chat Bot</string>
+    <string name="crie_uma_agora"><u>Crie uma agora!</u></string>
+    <string name="faca_o_login"><u>Faça o login!</u></string>
+</resources>
