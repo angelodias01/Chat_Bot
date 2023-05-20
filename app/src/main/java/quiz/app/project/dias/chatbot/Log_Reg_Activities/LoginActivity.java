@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
                             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle();
                             LoginActivity.this.startActivity(intent, bundle);
-                            finish();
+                            finishAffinity();
 
                         } else {
                             Toast.makeText(LoginActivity.this, "O nome de utilizador e a palavra-passe não correspondem!",
@@ -132,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
+                        System.exit(0);
                     }
                 })
                 .setNegativeButton("Não", null)

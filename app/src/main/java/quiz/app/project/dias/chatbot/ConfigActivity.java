@@ -8,21 +8,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import quiz.app.project.dias.chatbot.Database.AppDatabase;
-import quiz.app.project.dias.chatbot.Database.User;
 import quiz.app.project.dias.chatbot.Database.UserDao;
-import quiz.app.project.dias.chatbot.Log_Reg_Activities.LoginActivity;
 
 public class ConfigActivity extends AppCompatActivity {
-    private Button btnLimpar;
+    private Button btnLimpar, btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +29,7 @@ public class ConfigActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         this.btnLimpar = findViewById(R.id.btnLimpar);
+        this.btnBack = findViewById(R.id.btnBack);
 
         btnLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,9 +45,10 @@ public class ConfigActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 ExecutorService executor = Executors.newSingleThreadExecutor();
                                 executor.execute(() -> {
+                                    // TODO Configs:
+                                    //Change for messages and chats.
                                     userDao.deleteAll();
                                     List userList = userDao.getAllUsers();
-
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -59,13 +57,12 @@ public class ConfigActivity extends AppCompatActivity {
                                                 Intent intent = new Intent(ConfigActivity.this,MainScreenActivity.class);
                                                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();
                                                 ConfigActivity.this.startActivity(intent, bundle);
-                                                finish();
+                                                finishAffinity();
                                             } else {
                                                 Toast.makeText(ConfigActivity.this, "Não foi possível limpar os dados!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
-
                                     executor.shutdown();
                                 });
                             }
@@ -74,5 +71,22 @@ public class ConfigActivity extends AppCompatActivity {
                         .show();
             }
         });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ConfigActivity.this,ChatActivity.class);
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();
+                ConfigActivity.this.startActivity(intent, bundle);
+                finishAffinity();
+            }
+        });
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ConfigActivity.this,ChatActivity.class);
+        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();
+        ConfigActivity.this.startActivity(intent, bundle);
+        finish();
     }
 }
