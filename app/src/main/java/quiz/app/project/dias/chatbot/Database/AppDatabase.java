@@ -8,10 +8,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {User.class, Bot.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;
     public abstract UserDao getUserDao();
+    public abstract BotDao getBotDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {

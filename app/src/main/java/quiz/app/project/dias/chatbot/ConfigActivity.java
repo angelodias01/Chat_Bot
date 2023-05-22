@@ -31,6 +31,7 @@ public class ConfigActivity extends AppCompatActivity {
         this.btnLimpar = findViewById(R.id.btnLimpar);
         this.btnBack = findViewById(R.id.btnBack);
 
+
         btnLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +50,8 @@ public class ConfigActivity extends AppCompatActivity {
                                     //Change for messages and chats.
                                     userDao.deleteAll();
                                     List userList = userDao.getAllUsers();
-                                    runOnUiThread(new Runnable() {
+
+                                    runOnUiThread(new Runnable() { //A linha abaixo foi retirada do stackoverflow visto que tinha um erro de UI lock e a unica opção que deu foi esta!
                                         @Override
                                         public void run() {
                                             if (userList != null) {
