@@ -5,8 +5,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Chat",foreignKeys = @ForeignKey(entity=User.class, parentColumns="userId", childColumns="userId"))
-public class Chat {
+@Entity(tableName = "UserMessages",foreignKeys = @ForeignKey(entity=User.class, parentColumns="userId", childColumns="userId"))
+public class UserMessages {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "chatId")
     private int chatId;
@@ -15,7 +15,7 @@ public class Chat {
     @ColumnInfo(name = "userId")
     private int userId;
 
-    public Chat(int chatId, String chatName, int userId) {
+    public UserMessages(int chatId, String chatName, int userId) {
         this.chatId = chatId;
         this.chatName = chatName;
         this.userId = userId;

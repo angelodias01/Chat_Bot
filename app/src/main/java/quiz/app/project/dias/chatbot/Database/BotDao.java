@@ -8,5 +8,5 @@ import java.util.List;
 @Dao
 public interface BotDao {
         @Query("Select * from Bot")
-        List<User> getAllBots();
+        List<Bot> getAllBots();
 }
