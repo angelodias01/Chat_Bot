@@ -36,14 +36,6 @@ public class Chat {
         return chatName;
     }
 
-    public int getBotId() {
-        return botId;
-    }
-
-    public void setBotId(int botId) {
-        this.botId = botId;
-    }
-
     public void setChatName(String chatName) {
         this.chatName = chatName;
     }
@@ -54,5 +46,13 @@ public class Chat {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getBotId() {
+        return botId;
+    }
+
+    public void setBotId(int botId) {
+        this.botId = botId;
     }
 }

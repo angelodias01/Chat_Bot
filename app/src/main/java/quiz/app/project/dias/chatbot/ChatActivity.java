@@ -10,8 +10,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class ChatActivity extends AppCompatActivity {
     Button btnConfig;
+    FloatingActionButton btnAddMsg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +27,19 @@ public class ChatActivity extends AppCompatActivity {
         super.onResume();
 
         this.btnConfig= findViewById(R.id.btnConfig);
+        this.btnAddMsg = findViewById(R.id.btnAddMsg);
         btnConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChatActivity.this, ConfigActivity.class);
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ChatActivity.this).toBundle();
+                ChatActivity.this.startActivity(intent, bundle);
+            }
+        });
+        btnAddMsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChatActivity.this, NewChatActivity.class);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ChatActivity.this).toBundle();
                 ChatActivity.this.startActivity(intent, bundle);
             }

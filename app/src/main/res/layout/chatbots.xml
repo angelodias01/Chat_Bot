@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/tvSelectBot"
         android:layout_width="108dp"
         android:layout_height="82dp"
         android:background="@color/button"

@@ -18,7 +18,7 @@ import quiz.app.project.dias.chatbot.Database.AppDatabase;
 import quiz.app.project.dias.chatbot.Database.UserDao;
 
 public class ConfigActivity extends AppCompatActivity {
-    private Button btnLimpar, btnBack;
+    private Button btnLimpar, btnBackConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +29,7 @@ public class ConfigActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         this.btnLimpar = findViewById(R.id.btnLimpar);
-        this.btnBack = findViewById(R.id.btnBack);
+        this.btnBackConfig = findViewById(R.id.btnBackConfig);
 
 
         btnLimpar.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,7 @@ public class ConfigActivity extends AppCompatActivity {
                         .show();
             }
         });
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        btnBackConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ConfigActivity.this,ChatActivity.class);
