@@ -12,8 +12,10 @@ import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import quiz.app.project.dias.chatbot.Log_Reg_Activities.LoginActivity;
+
 public class ChatActivity extends AppCompatActivity {
-    Button btnConfig;
+    Button btnConfig, btnChatLogout;
     FloatingActionButton btnAddMsg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class ChatActivity extends AppCompatActivity {
 
         this.btnConfig= findViewById(R.id.btnConfig);
         this.btnAddMsg = findViewById(R.id.btnAddMsg);
+        this.btnChatLogout = findViewById(R.id.btnChatLogout);
         btnConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,6 +45,25 @@ public class ChatActivity extends AppCompatActivity {
                 Intent intent = new Intent(ChatActivity.this, NewChatActivity.class);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ChatActivity.this).toBundle();
                 ChatActivity.this.startActivity(intent, bundle);
+            }
+        });
+        btnChatLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                new AlertDialog.Builder(ChatActivity.this)
+                        .setTitle("Deseja efetuar o logout?")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(ChatActivity.this, LoginActivity.class);
+                                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ChatActivity.this).toBundle();
+                                ChatActivity.this.startActivity(intent, bundle);
+                                finishAffinity();
+                            }
+                        })
+                        .setNegativeButton("Não", null)
+                        .show();
             }
         });
     }

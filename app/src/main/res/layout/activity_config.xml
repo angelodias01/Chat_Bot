@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnLogoutConfig"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="40dp"
         android:layout_height="40dp"

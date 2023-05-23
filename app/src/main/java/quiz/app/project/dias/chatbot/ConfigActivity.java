@@ -16,9 +16,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import quiz.app.project.dias.chatbot.Database.AppDatabase;
 import quiz.app.project.dias.chatbot.Database.UserDao;
+import quiz.app.project.dias.chatbot.Log_Reg_Activities.LoginActivity;
 
 public class ConfigActivity extends AppCompatActivity {
-    private Button btnLimpar, btnBackConfig;
+    private Button btnLimpar, btnBackConfig, btnLogoutConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,7 @@ public class ConfigActivity extends AppCompatActivity {
         super.onResume();
         this.btnLimpar = findViewById(R.id.btnLimpar);
         this.btnBackConfig = findViewById(R.id.btnBackConfig);
-
+        this.btnLogoutConfig =  findViewById(R.id.btnLogoutConfig);
 
         btnLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +81,25 @@ public class ConfigActivity extends AppCompatActivity {
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();
                 ConfigActivity.this.startActivity(intent, bundle);
                 finishAffinity();
+            }
+        });
+        btnLogoutConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                new AlertDialog.Builder(ConfigActivity.this)
+                        .setTitle("Deseja efetuar o logout?")
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(ConfigActivity.this, LoginActivity.class);
+                                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();
+                                ConfigActivity.this.startActivity(intent, bundle);
+                                finishAffinity();
+                            }
+                        })
+                        .setNegativeButton("Não", null)
+                        .show();
             }
         });
     }

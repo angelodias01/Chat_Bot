@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/chatbot" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnChatLogout"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="40dp"
         android:layout_height="40dp"
