@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Database code
-                AppDatabase db = Room.databaseBuilder(LoginActivity.this, AppDatabase.class,"AppDatabase").build();
+                AppDatabase db = AppDatabase.getInstance(LoginActivity.this);
                 UserDao userDao = db.getUserDao();
 
                 username = tbUsername.getText().toString();
