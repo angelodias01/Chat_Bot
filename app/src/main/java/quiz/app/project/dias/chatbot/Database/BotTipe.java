@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "BotTipe")
+@Entity(tableName = "BotTipe", foreignKeys = @ForeignKey(entity = BotMessages.class, parentColumns = "botMessageId", childColumns = "botMessageID"))
 public class BotTipe {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "botTipeId")
@@ -13,13 +13,13 @@ public class BotTipe {
     @ColumnInfo(name = "botTipe")
     private String BotTipe;
     @ColumnInfo(name = "botMessageId")
-    private int BotMessageId;
+    private int botMessageId;
     public BotTipe() {
     }
     public BotTipe(int botTipeId, String botTipe, int botMessageId) {
         this.BotTipeId = botTipeId;
         this.BotTipe = botTipe;
-        this.BotMessageId = botMessageId;
+        this.botMessageId = botMessageId;
     }
 
     public int getBotTipeId() {
@@ -36,6 +36,14 @@ public class BotTipe {
 
     public void setBotTipe(String botTipe) {
         BotTipe = botTipe;
+    }
+
+    public int getBotMessageId(){
+        return botMessageId;
+    }
+
+    public void setBotMessageId(int botMessageId) {
+        botMessageId = botMessageId;
     }
 }
 
