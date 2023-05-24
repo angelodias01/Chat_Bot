@@ -19,7 +19,7 @@ import quiz.app.project.dias.chatbot.Database.UserDao;
 import quiz.app.project.dias.chatbot.Log_Reg_Activities.LoginActivity;
 
 public class MainScreenActivity extends AppCompatActivity {
-    public static final int delay = 1000;
+    public static final int delay = 800;
     public static final Handler handler = new Handler();
     private List<User> userList;
 

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Chat",foreignKeys = {@ForeignKey(entity = User.class, parentColumns = "userId", childColumns = "userId"), @ForeignKey(entity = Bot.class, parentColumns = "botId", childColumns = "botId")})
 public class Chat {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "ChatId")
+    @ColumnInfo(name = "chatId")
     private int chatId;
     @ColumnInfo(name = "userId")
     private int userId;

@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey;
 
 import java.sql.Time;
 
-@Entity(tableName = "BotMessages",foreignKeys = {@ForeignKey(entity=Chat.class, parentColumns="chatId", childColumns="chatId"), @ForeignKey(entity = BotTipe.class, parentColumns = "botTipeId", childColumns = "botTipeId")})
+@Entity(tableName = "BotMessages",foreignKeys = @ForeignKey(entity = BotTipe.class, parentColumns = "botTipeId", childColumns = "botTipeId"))
 public class BotMessages {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "botMessageId")
-    private int BotMessageId;
+    private int botMessageId;
     @ColumnInfo(name = "receivedMessage")
     private String receivedMessage;
     @ColumnInfo(name = "botMessage")
@@ -23,7 +23,7 @@ public class BotMessages {
     private int botTipeId;
     public BotMessages() {}
     public BotMessages(int botMessageId,String receivedMessage, String botMessage, String botMessageTime, int botTipeId) {
-        this.BotMessageId = botMessageId;
+        this.botMessageId = botMessageId;
         this.receivedMessage = receivedMessage;
         this.BotMessage = botMessage;
         this.botMessageTime = botMessageTime;
@@ -55,11 +55,11 @@ public class BotMessages {
     }
 
     public int getBotMessageId() {
-        return BotMessageId;
+        return botMessageId;
     }
 
     public void setBotMessageId(int botMessageId) {
-        BotMessageId = botMessageId;
+        botMessageId = botMessageId;
     }
 
     public String getBotMessage() {
