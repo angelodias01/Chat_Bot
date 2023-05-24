@@ -1,6 +1,5 @@
 package quiz.app.project.dias.chatbot.Database;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

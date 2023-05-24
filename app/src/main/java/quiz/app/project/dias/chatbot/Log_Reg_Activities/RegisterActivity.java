@@ -73,6 +73,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Database code
+                AppDatabase db = AppDatabase.getInstance(RegisterActivity.this);
+                UserDao userDao = db.getUserDao();
+
                 username = tbUsername.getText().toString();
                 password = tbPassword.getText().toString();
 

@@ -8,18 +8,15 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Chat",foreignKeys = {@ForeignKey(entity = User.class, parentColumns = "userId", childColumns = "userId"), @ForeignKey(entity = Bot.class, parentColumns = "botId", childColumns = "botId")})
 public class Chat {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "chatId")
+    @ColumnInfo(name = "ChatId")
     private int chatId;
-    @ColumnInfo(name = "chatName")
-    private String chatName;
     @ColumnInfo(name = "userId")
     private int userId;
     @ColumnInfo(name = "botId")
     private int botId;
 
-    public Chat(int chatId, String chatName, int userId, int botId) {
+    public Chat(int chatId, int userId, int botId) {
         this.chatId = chatId;
-        this.chatName = chatName;
         this.userId = userId;
         this.botId = botId;
     }
@@ -30,14 +27,6 @@ public class Chat {
 
     public void setChatId(int chatId) {
         this.chatId = chatId;
-    }
-
-    public String getChatName() {
-        return chatName;
-    }
-
-    public void setChatName(String chatName) {
-        this.chatName = chatName;
     }
 
     public int getUserId() {

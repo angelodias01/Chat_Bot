@@ -5,42 +5,40 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import java.sql.Time;
-
-@Entity(tableName = "UserMessages",foreignKeys = @ForeignKey(entity=User.class, parentColumns="userId", childColumns="userId"))
+@Entity(tableName = "UserMessages",foreignKeys = @ForeignKey(entity=Chat.class, parentColumns="userMessageId", childColumns="userMessageId"))
 public class UserMessages {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "chatId")
-    private int chatId;
-    @ColumnInfo(name = "chatName")
-    private String chatName;
+    @ColumnInfo(name = "userMessagesId")
+    private int userMessageId;
+    @ColumnInfo(name = "userMessage")
+    private String userMessage;
     @ColumnInfo(name = "MessageTime")
     private String MessageTime;
-    @ColumnInfo(name = "userId")
-    private int userId;
+    @ColumnInfo(name = "ChatId")
+    private int chatId;
 
     public UserMessages(){}
-    public UserMessages(int chatId, String chatName, String messageTime, int userId) {
-        this.chatId = chatId;
-        this.chatName = chatName;
+    public UserMessages(int userMessageId, String userMessage, String messageTime, int chatId) {
+        this.userMessageId = userMessageId;
+        this.userMessage = userMessage;
         this.MessageTime = messageTime;
-        this.userId = userId;
-    }
-
-    public int getChatId() {
-        return chatId;
-    }
-
-    public void setChatId(int chatId) {
         this.chatId = chatId;
     }
 
-    public String getChatName() {
-        return chatName;
+    public int getUserMessageId() {
+        return userMessageId;
     }
 
-    public void setChatName(String chatName) {
-        this.chatName = chatName;
+    public void setUserMessageId(int userMessageId) {
+        this.userMessageId = userMessageId;
+    }
+
+    public String getUserMessage() {
+        return userMessage;
+    }
+
+    public void setUserMessage(String userMessage) {
+        this.userMessage = userMessage;
     }
 
     public String getMessageTime() {
@@ -51,11 +49,11 @@ public class UserMessages {
         MessageTime = messageTime;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getChatId() {
+        return chatId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setChatId(int chatId) {
+        this.chatId = chatId;
     }
 }
