@@ -37,6 +37,7 @@ public class MainScreenActivity extends AppCompatActivity {
             //Creating a fragment manager to change automatically from main fragment to the terms fragment.
             Intent intent = new Intent(this, LoginActivity.class);
             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+            AppDatabase db = AppDatabase.getInstance(this);
             this.startActivity(intent, bundle);
             finish();
         }, delay);

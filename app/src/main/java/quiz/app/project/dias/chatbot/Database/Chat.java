@@ -14,11 +14,15 @@ public class Chat {
     private int userId;
     @ColumnInfo(name = "botId")
     private int botId;
+    public String lastMessageDate;
+    private String lastMessage;
 
-    public Chat(int chatId, int userId, int botId) {
+    public Chat(int chatId, int userId, int botId, String lastMessageDate, String lastMessage) {
         this.chatId = chatId;
         this.userId = userId;
         this.botId = botId;
+        this.lastMessageDate = lastMessageDate;
+        this.lastMessage = lastMessage;
     }
 
     public int getChatId() {
@@ -43,5 +47,21 @@ public class Chat {
 
     public void setBotId(int botId) {
         this.botId = botId;
+    }
+
+    public String getLastMessageDate() {
+        return lastMessageDate;
+    }
+
+    public void setLastMessageDate(String lastMessageDate) {
+        this.lastMessageDate = lastMessageDate;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
     }
 }

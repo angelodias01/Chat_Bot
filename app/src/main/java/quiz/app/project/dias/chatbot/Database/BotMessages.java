@@ -13,6 +13,8 @@ public class BotMessages {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "botMessageId")
     private int BotMessageId;
+    @ColumnInfo(name = "receivedMessage")
+    private String receivedMessage;
     @ColumnInfo(name = "botMessage")
     private String BotMessage;
     @ColumnInfo(name = "botMessageTime")
@@ -20,8 +22,9 @@ public class BotMessages {
     @ColumnInfo(name = "botTipeId")
     private int botTipeId;
     public BotMessages() {}
-    public BotMessages(int botMessageId, String botMessage, String botMessageTime, int botTipeId) {
+    public BotMessages(int botMessageId,String receivedMessage, String botMessage, String botMessageTime, int botTipeId) {
         this.BotMessageId = botMessageId;
+        this.receivedMessage = receivedMessage;
         this.BotMessage = botMessage;
         this.botMessageTime = botMessageTime;
         this.botTipeId = botTipeId;
@@ -32,6 +35,22 @@ public class BotMessages {
     }
 
     public void setbotTipeId(int botTipeId) {
+        this.botTipeId = botTipeId;
+    }
+
+    public String getReceivedMessage() {
+        return receivedMessage;
+    }
+
+    public void setReceivedMessage(String receivedMessage) {
+        this.receivedMessage = receivedMessage;
+    }
+
+    public int getBotTipeId() {
+        return botTipeId;
+    }
+
+    public void setBotTipeId(int botTipeId) {
         this.botTipeId = botTipeId;
     }
 
