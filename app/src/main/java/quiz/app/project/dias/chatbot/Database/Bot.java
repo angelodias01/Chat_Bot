@@ -5,48 +5,48 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Bot", foreignKeys = {@ForeignKey(entity = BotTipe.class, parentColumns = "botTipeId", childColumns = "botTipeId")})
+@Entity(tableName = "Bot")
 public class Bot {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "botId")
-    private int BotId;
+    private int botId;
     @ColumnInfo(name = "botName")
-    private String BotName;
-    @ColumnInfo(name = "botTipeId")
-    private int botTipeId;
+    private String botName;
+    @ColumnInfo(name = "botTipe")
+    private String botTipe;
 
     public Bot() {
         // Empty constructor
     }
 
-    public Bot(int botId, String botName, int botTipeId) {
-        this.BotId = botId;
-        this.BotName = botName;
-        this.botTipeId = botTipeId;
+    public Bot(int botId, String botName, String botTipe) {
+        this.botId = botId;
+        this.botName = botName;
+        this.botTipe = botTipe;
     }
 
     public int getBotId() {
-        return BotId;
+        return botId;
     }
 
     public void setBotId(int botId) {
-        BotId = botId;
+        this.botId = botId;
     }
 
     public String getBotName() {
-        return BotName;
+        return botName;
     }
 
     public void setBotName(String botName) {
-        BotName = botName;
+        this.botName = botName;
     }
 
-    public int getBotTipeId() {
-        return botTipeId;
+    public String getBotTipe() {
+        return botTipe;
     }
 
-    public void setBotTipeId(int botTipeId) {
-        this.botTipeId = botTipeId;
+    public void setBotTipe(String botTipe) {
+        this.botTipe = botTipe;
     }
 }
 

@@ -14,7 +14,9 @@ public class Chat {
     private int userId;
     @ColumnInfo(name = "botId")
     private int botId;
+    @ColumnInfo(name = "lastMessageDate")
     public String lastMessageDate;
+    @ColumnInfo(name = "lastMessage")
     private String lastMessage;
 
     public Chat(int chatId, int userId, int botId, String lastMessageDate, String lastMessage) {

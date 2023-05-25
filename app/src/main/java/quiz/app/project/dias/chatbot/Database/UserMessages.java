@@ -14,7 +14,7 @@ public class UserMessages {
     @ColumnInfo(name = "userMessage")
     private String userMessage;
     @ColumnInfo(name = "MessageTime")
-    private String MessageTime;
+    private String messageTime;
     @ColumnInfo(name = "chatId")
     private int chatId;
 
@@ -22,7 +22,7 @@ public class UserMessages {
     public UserMessages(int userMessageId, String userMessage, String messageTime, int chatId) {
         this.userMessageId = userMessageId;
         this.userMessage = userMessage;
-        this.MessageTime = messageTime;
+        this.messageTime = messageTime;
         this.chatId = chatId;
     }
 
@@ -43,11 +43,11 @@ public class UserMessages {
     }
 
     public String getMessageTime() {
-        return MessageTime;
+        return messageTime;
     }
 
     public void setMessageTime(String messageTime) {
-        MessageTime = messageTime;
+        messageTime = messageTime;
     }
 
     public int getChatId() {

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 import java.sql.Time;
 
-@Entity(tableName = "BotMessages",foreignKeys = @ForeignKey(entity = BotTipe.class, parentColumns = "botTipeId", childColumns = "botTipeId"))
+@Entity(tableName = "BotMessages",foreignKeys = @ForeignKey(entity = Bot.class, parentColumns = "botId", childColumns = "botId"))
 public class BotMessages {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "botMessageId")
@@ -16,26 +16,27 @@ public class BotMessages {
     @ColumnInfo(name = "receivedMessage")
     private String receivedMessage;
     @ColumnInfo(name = "botMessage")
-    private String BotMessage;
+    private String botMessageSent;
     @ColumnInfo(name = "botMessageTime")
     private String botMessageTime;
-    @ColumnInfo(name = "botTipeId")
-    private int botTipeId;
+    @ColumnInfo(name = "botId")
+    private int botId;
     public BotMessages() {}
-    public BotMessages(int botMessageId,String receivedMessage, String botMessage, String botMessageTime, int botTipeId) {
+
+    public BotMessages(int botMessageId, String receivedMessage, String botMessageSent, String botMessageTime, int botId) {
         this.botMessageId = botMessageId;
         this.receivedMessage = receivedMessage;
-        this.BotMessage = botMessage;
+        this.botMessageSent = botMessageSent;
         this.botMessageTime = botMessageTime;
-        this.botTipeId = botTipeId;
+        this.botId = botId;
     }
 
-    public int getbotTipeId() {
-        return botTipeId;
+    public int getBotMessageId() {
+        return botMessageId;
     }
 
-    public void setbotTipeId(int botTipeId) {
-        this.botTipeId = botTipeId;
+    public void setBotMessageId(int botMessageId) {
+        this.botMessageId = botMessageId;
     }
 
     public String getReceivedMessage() {
@@ -46,28 +47,12 @@ public class BotMessages {
         this.receivedMessage = receivedMessage;
     }
 
-    public int getBotTipeId() {
-        return botTipeId;
+    public String getBotMessageSent() {
+        return botMessageSent;
     }
 
-    public void setBotTipeId(int botTipeId) {
-        this.botTipeId = botTipeId;
-    }
-
-    public int getBotMessageId() {
-        return botMessageId;
-    }
-
-    public void setBotMessageId(int botMessageId) {
-        botMessageId = botMessageId;
-    }
-
-    public String getBotMessage() {
-        return BotMessage;
-    }
-
-    public void setBotMessage(String botMessage) {
-        BotMessage = botMessage;
+    public void setBotMessageSent(String botMessageSent) {
+        this.botMessageSent = botMessageSent;
     }
 
     public String getBotMessageTime() {
@@ -76,5 +61,13 @@ public class BotMessages {
 
     public void setBotMessageTime(String botMessageTime) {
         this.botMessageTime = botMessageTime;
+    }
+
+    public int getBotId() {
+        return botId;
+    }
+
+    public void setBotId(int botId) {
+        this.botId = botId;
     }
 }
