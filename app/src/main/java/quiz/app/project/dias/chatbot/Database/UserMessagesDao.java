@@ -8,10 +8,10 @@ import java.util.List;
 
 @Dao
 public interface UserMessagesDao {
-    @Query("SELECT * FROM UserMessages WHERE chatId = :id")
+    @Query("SELECT * FROM UserMessages WHERE userId = :id")
     List<UserMessages> getAll(int id);
 
-    @Query("SELECT * FROM UserMessages WHERE chatId = :id ORDER BY messageTime desc limit 1")
+    @Query("SELECT * FROM UserMessages WHERE userId = :id ORDER BY messageTime desc limit 1")
     UserMessages getLastMessageFromChat(int id);
 
     @Query("SELECT * FROM UserMessages ORDER BY messageTime DESC ")

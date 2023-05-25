@@ -1,4 +1,4 @@
 package quiz.app.project.dias.chatbot;
 
-public class BotTipeAdapter {
+public class BotAdapter {
 }

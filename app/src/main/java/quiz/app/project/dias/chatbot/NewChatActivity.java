@@ -27,7 +27,7 @@ public class NewChatActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NewChatActivity.this, Chat.class);
+                Intent intent = new Intent(NewChatActivity.this, ChatActivity.class);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(NewChatActivity.this).toBundle();
                 finish();
                 startActivity(intent, bundle);

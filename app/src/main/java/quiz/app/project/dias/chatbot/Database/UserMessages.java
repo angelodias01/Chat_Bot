@@ -6,7 +6,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 //TODO
 //need userid!!!!
-@Entity(tableName = "UserMessages",foreignKeys = @ForeignKey(entity = Chat.class, parentColumns = "chatId", childColumns = "chatId"))
+@Entity(tableName = "UserMessages",foreignKeys = @ForeignKey(entity = User.class, parentColumns = "userId", childColumns = "userId"))
 public class UserMessages {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "userMessagesId")
@@ -15,15 +15,16 @@ public class UserMessages {
     private String userMessage;
     @ColumnInfo(name = "MessageTime")
     private String messageTime;
-    @ColumnInfo(name = "chatId")
-    private int chatId;
+    @ColumnInfo(name = "userId")
+    private int userId;
 
     public UserMessages(){}
-    public UserMessages(int userMessageId, String userMessage, String messageTime, int chatId) {
+
+    public UserMessages(int userMessageId, String userMessage, String messageTime, int userId) {
         this.userMessageId = userMessageId;
         this.userMessage = userMessage;
         this.messageTime = messageTime;
-        this.chatId = chatId;
+        this.userId = userId;
     }
 
     public int getUserMessageId() {
@@ -50,11 +51,11 @@ public class UserMessages {
         messageTime = messageTime;
     }
 
-    public int getChatId() {
-        return chatId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setChatId(int chatId) {
-        this.chatId = chatId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }
