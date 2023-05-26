@@ -35,7 +35,7 @@ public class NewChatActivity extends AppCompatActivity {
 
         // criar um objeto do tipo ContactAdapter (que extende Adapter)
         // ContactAdapter adapter = new ContactAdapter(MemoryDatabase.getAllContacts());
-        this.adapter = new BotAdapter();
+        this.adapter = new BotAdapter(this.getApplicationContext());
         // ContactAdapter adapter = new ContactAdapter(AppDatabase.getInstance(this).getContactDao().getAll());
 
         // criar um objecto do tipo LinearLayoutManager para ser utilizado na RecyclerView

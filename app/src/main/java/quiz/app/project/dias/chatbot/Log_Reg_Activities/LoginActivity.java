@@ -1,7 +1,6 @@
 package quiz.app.project.dias.chatbot.Log_Reg_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;

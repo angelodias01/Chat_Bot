@@ -14,7 +14,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao getUserDao();
     public abstract BotDao getBotDao();
     public abstract ChatDao getChatDao();
-    public abstract UserMessagesDao getUserMessageDao();
+    public abstract MessagesDao getMessageDao();
     public abstract BotMessagesDao getBotMessagesDao();
 
 

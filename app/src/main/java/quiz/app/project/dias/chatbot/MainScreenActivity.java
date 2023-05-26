@@ -1,12 +1,8 @@
 package quiz.app.project.dias.chatbot;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.room.Room;
 
 import android.app.ActivityOptions;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,7 +11,6 @@ import java.util.List;
 
 import quiz.app.project.dias.chatbot.Database.AppDatabase;
 import quiz.app.project.dias.chatbot.Database.User;
-import quiz.app.project.dias.chatbot.Database.UserDao;
 import quiz.app.project.dias.chatbot.Log_Reg_Activities.LoginActivity;
 
 public class MainScreenActivity extends AppCompatActivity {

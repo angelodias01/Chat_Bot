@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Messages")
 public class Messages {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "MessagesId")
-    private int MessageId;
+    @ColumnInfo(name = "messagesId")
+    private int messageId;
     @ColumnInfo(name = "Message")
     private String Message;
     @ColumnInfo(name = "MessageTime")
@@ -18,19 +18,19 @@ public class Messages {
 
     public Messages(){}
 
-    public Messages(int MessageId, String Message, String messageTime, int senderId) {
-        this.MessageId = MessageId;
+    public Messages(int messageId, String Message, String messageTime, int senderId) {
+        this.messageId = messageId;
         this.Message = Message;
         this.messageTime = messageTime;
         this.senderId = senderId;
     }
 
     public int getMessageId() {
-        return MessageId;
+        return messageId;
     }
 
     public void setMessageId(int MessageId) {
-        this.MessageId = MessageId;
+        this.messageId = messageId;
     }
 
     public String getMessage() {

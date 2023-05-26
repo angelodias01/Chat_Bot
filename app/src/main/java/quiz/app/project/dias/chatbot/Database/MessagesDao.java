@@ -7,16 +7,16 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface UserMessagesDao {
-    @Query("SELECT * FROM UserMessages WHERE userId = :id")
+public interface MessagesDao {
+    @Query("SELECT * FROM Messages WHERE messagesId = :id")
     List<Messages> getAll(int id);
 
-    @Query("SELECT * FROM UserMessages WHERE userId = :id ORDER BY messageTime desc limit 1")
+    @Query("SELECT * FROM Messages WHERE senderId = :id ORDER BY messageTime desc limit 1")
     Messages getLastMessageFromChat(int id);
 
-    @Query("SELECT * FROM UserMessages ORDER BY messageTime DESC ")
+    @Query("SELECT * FROM Messages ORDER BY messageTime DESC ")
     List<Messages> getLastMessage();
 
     @Insert
-    void insert(Messages message);
+    void insert(Messages messages);
 }

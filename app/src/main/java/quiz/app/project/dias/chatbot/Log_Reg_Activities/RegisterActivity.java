@@ -1,7 +1,6 @@
 package quiz.app.project.dias.chatbot.Log_Reg_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -18,10 +17,8 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import quiz.app.project.dias.chatbot.ChatActivity;
 import quiz.app.project.dias.chatbot.Database.AppDatabase;
 import quiz.app.project.dias.chatbot.Database.User;
-import quiz.app.project.dias.chatbot.Database.UserDao;
 import quiz.app.project.dias.chatbot.R;
 
 public class RegisterActivity extends AppCompatActivity {
