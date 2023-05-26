@@ -19,8 +19,7 @@ public class Chat {
     @ColumnInfo(name = "lastMessage")
     private String lastMessage;
 
-    public Chat(int chatId, int userId, int botId, String lastMessageDate, String lastMessage) {
-        this.chatId = chatId;
+    public Chat(int userId, int botId, String lastMessageDate, String lastMessage) {
         this.userId = userId;
         this.botId = botId;
         this.lastMessageDate = lastMessageDate;

@@ -11,9 +11,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+
+import quiz.app.project.dias.chatbot.Database.AppDatabase;
 import quiz.app.project.dias.chatbot.Database.Bot;
+import quiz.app.project.dias.chatbot.Database.Chat;
+import quiz.app.project.dias.chatbot.Database.ChatDao;
 
 public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
     //instance variable that stores the list of bot and the context that this adapter will use
@@ -44,10 +51,39 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
         holder.lblBotName.setText(bot.getBotName());
 
         holder.tvSelectBot.setOnClickListener(view1 -> {
+            AppDatabase db = AppDatabase.getInstance(context);
             Intent intent = new Intent(context, MessageActivity.class);
             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.context).toBundle();
+            createChat(holder.context);
             holder.context.startActivity(intent, bundle);
         });
+    }
+    public void createChat(Context context){
+        AppDatabase db = AppDatabase.getInstance(context);
+        ChatDao chatDao = db.getChatDao();
+
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        String hour = currentHour + ":" + minuteFormater(calendar);
+        //TODO need to get user login id and selected bot id !!
+        Chat chat = new Chat(1,1,currentDate + " " + hour,"");
+
+        chatDao.insert(chat);
+    }
+
+    public static String minuteFormater(Calendar calendar){
+        int currentMinute = calendar.get(Calendar.MINUTE);
+        String minutes = Integer.toString(currentMinute);
+
+
+        if(currentMinute < 10){
+            minutes = "0" + currentMinute;
+        }
+
+        return minutes;
     }
 
     //return the number of Items that the recycler view should display
