@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {User.class, Bot.class, Chat.class, UserMessages.class, BotMessages.class}, version = 1)
+@Database(entities = {User.class, Bot.class, Chat.class, Messages.class, BotMessages.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;
     public abstract UserDao getUserDao();
