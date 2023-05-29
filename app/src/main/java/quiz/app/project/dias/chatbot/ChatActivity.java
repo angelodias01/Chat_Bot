@@ -23,7 +23,8 @@ import quiz.app.project.dias.chatbot.Database.MessagesDao;
 import quiz.app.project.dias.chatbot.Log_Reg_Activities.LoginActivity;
 
 public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatAdapterEventListener{
-
+    private static final String userId = "userId";
+    public int userID;
     private ChatAdapter adapter;
     Button btnConfig, btnChatLogout;
     FloatingActionButton btnAddMsg;
@@ -32,9 +33,11 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_ChatBot);
         setContentView(R.layout.chat_activity);
+        Bundle bundle = getIntent().getExtras();
+        this.userID = bundle.getInt(this.userId, 0);
 
-    // obter uma referência para a RecyclerView que existe no layout da MainActivity
-    RecyclerView recyclerView = findViewById(R.id.recyclerViewChats);
+        // obter uma referência para a RecyclerView que existe no layout da MainActivity
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewChats);
 
     // obter uma instância do ChattDao e do Message
     AppDatabase db = AppDatabase.getInstance(this);
@@ -42,7 +45,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
     MessagesDao messageDAO = db.getMessageDao();
 
     // criar um objeto do tipo ChatAdapter (que extende Adapter)
-    this.adapter = new  ChatAdapter(chatDao.getAll(),messageDAO.getLastMessage(), this);
+    this.adapter = new  ChatAdapter(chatDao.getChatById(userID),messageDAO.getLastMessage(), this);
     // ContactAdapter adapter = new ContactAdapter(AppDatabase.getInstance(this).getContactDao().getAll());
 
     // criar um objecto do tipo LinearLayoutManager para ser utilizado na RecyclerView
@@ -58,7 +61,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
     @Override
     protected void onStart() {
         super.onStart();
-        List<Chat> newChatList = AppDatabase.getInstance(this).getChatDao().getAll();
+        List<Chat> newChatList = AppDatabase.getInstance(this).getChatDao().getChatById(userID);
         this.adapter.refreshList(newChatList);
     }
 
@@ -72,20 +75,20 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
     @Override
     public void onContactLongClicked(int chatId) {
         ChatDao chatDao = AppDatabase.getInstance(ChatActivity.this).getChatDao();
-        Chat chat = chatDao.getChatById(chatId);
+        List<Chat> chat= chatDao.getChatById(chatId);
 
         // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         // 2. Chain together various setter methods to set the dialog characteristics
         builder.setTitle("Delete chat");
-        builder.setMessage("Do you really want to delete \"" + chat.getChatId() + "\" ?");
+        builder.setMessage("Do you really want to delete \"" + chat + "\" ?");
 
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                chatDao.delete(chat);
-                List<Chat> newList = chatDao.getAll();
+                chatDao.delete((Chat) chat);
+                List<Chat> newList = chatDao.getChatById(userID);
                 adapter.refreshList(newList);
                 dialog.dismiss();
             }
@@ -123,6 +126,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
             public void onClick(View v) {
                 Intent intent = new Intent(ChatActivity.this, NewChatActivity.class);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ChatActivity.this).toBundle();
+                intent.putExtra("userId", userID);
                 ChatActivity.this.startActivity(intent, bundle);
             }
         });

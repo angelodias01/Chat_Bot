@@ -1,7 +1,6 @@
 package quiz.app.project.dias.chatbot;
 
 import android.content.Context;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

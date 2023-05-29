@@ -96,7 +96,9 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Início de sessão com êxito!",
                                     Toast.LENGTH_SHORT).show();
                             executor.shutdown();
+                            int userID = userDao.getUserById(username, password);
                             Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
+                            intent.putExtra("userId", userID);
                             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle();
                             LoginActivity.this.startActivity(intent, bundle);
                             finishAffinity();

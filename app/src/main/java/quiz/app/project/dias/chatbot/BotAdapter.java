@@ -19,6 +19,7 @@ import java.util.List;
 
 import quiz.app.project.dias.chatbot.Database.AppDatabase;
 import quiz.app.project.dias.chatbot.Database.Bot;
+import quiz.app.project.dias.chatbot.Database.BotDao;
 import quiz.app.project.dias.chatbot.Database.Chat;
 import quiz.app.project.dias.chatbot.Database.ChatDao;
 
@@ -27,11 +28,15 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
     private List<Bot> botList;
     private Context context;
 
+    public int userID;
+    int botID;
+
     //constructor that receives a bot list and the context to be used by this bot adapter
-    public BotAdapter(Context context) {
+    public BotAdapter(Context context, int userID) {
         //store in the instance variable the value of the constructor parameter
         this.botList = new ArrayList<>();
         this.context = context;
+        this.userID = userID;
     }
 
     @NonNull
@@ -51,7 +56,10 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
         holder.lblBotName.setText(bot.getBotName());
 
         holder.tvSelectBot.setOnClickListener(view1 -> {
+            String botName = holder.lblBotName.getText().toString();
             AppDatabase db = AppDatabase.getInstance(context);
+            BotDao botDao = db.getBotDao();
+            botID = botDao.getBotById(botName);
             Intent intent = new Intent(context, MessageActivity.class);
             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.context).toBundle();
             createChat(holder.context);
@@ -68,8 +76,7 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
         int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
 
         String hour = currentHour + ":" + minuteFormater(calendar);
-        //TODO need to get user login id and selected bot id !!
-        Chat chat = new Chat(1,1,currentDate + " " + hour,"");
+        Chat chat = new Chat(userID,botID,currentDate + " " + hour,"");
 
         chatDao.insert(chat);
     }

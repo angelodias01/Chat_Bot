@@ -9,4 +9,6 @@ import java.util.List;
 public interface BotDao {
         @Query("Select * from Bot")
         List<Bot> getAllBots();
+        @Query("Select botId from Bot where botName= :botName")
+        int getBotById(String botName);
 }

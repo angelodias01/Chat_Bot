@@ -15,7 +15,7 @@ public interface ChatDao {
 
 
     @Query("SELECT * FROM chat WHERE chatID = :chatId")
-    Chat getChatById(int chatId);
+    List<Chat> getChatById(int chatId);
 
 
     @Query("UPDATE chat SET lastMessageDate = :date WHERE chatID = :id ")

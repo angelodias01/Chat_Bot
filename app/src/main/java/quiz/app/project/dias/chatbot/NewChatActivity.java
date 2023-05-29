@@ -20,11 +20,15 @@ import quiz.app.project.dias.chatbot.Database.Chat;
 public class NewChatActivity extends AppCompatActivity {
     private Button btnBack;
     private BotAdapter adapter;
+    private static final String userId = "userId";
+    public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_ChatBot);
         setContentView(R.layout.new_chat_activity);
+        Bundle bundle = getIntent().getExtras();
+        this.userID = bundle.getInt(this.userId, 0);
 
         // obter uma referência para a RecyclerView que existe no layout da MainActivity
         RecyclerView recyclerView = findViewById(R.id.recyclerViewBots);
@@ -35,7 +39,7 @@ public class NewChatActivity extends AppCompatActivity {
 
         // criar um objeto do tipo ContactAdapter (que extende Adapter)
         // ContactAdapter adapter = new ContactAdapter(MemoryDatabase.getAllContacts());
-        this.adapter = new BotAdapter(this.getApplicationContext());
+        this.adapter = new BotAdapter(this.getApplicationContext(),userID);
         // ContactAdapter adapter = new ContactAdapter(AppDatabase.getInstance(this).getContactDao().getAll());
 
         // criar um objecto do tipo LinearLayoutManager para ser utilizado na RecyclerView

@@ -28,9 +28,8 @@ public abstract class AppDatabase extends RoomDatabase {
                             super.onCreate(db);
                             //code not working!!!
                             db.execSQL("INSERT INTO User VALUES (1, 'admin', 'admin')");
-                            db.execSQL("INSERT INTO Bot VALUES(1,'Bot Agressivo', 'Agressivo')");
-                            db.execSQL("INSERT INTO Bot VALUES(2,'Bot Normal', 'Normal')");
-                            db.execSQL("INSERT INTO Bot VALUES(3,'Bot Amigavel', 'Amigavel')");
+                            db.execSQL("INSERT INTO Bot VALUES(1,'Bot Agressivo', 'Agressivo')," +
+                                    "(2,'Bot Normal', 'Normal'),(3,'Bot Amigavel', 'Amigavel')");
                         }
                     })
                     .build();
