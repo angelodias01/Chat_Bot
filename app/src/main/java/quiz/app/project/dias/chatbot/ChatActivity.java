@@ -91,8 +91,8 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                chatDao.deleteChatById(chatId);
-                List<Chat> newList = chatDao.getChatById(chatId);
+                chatDao.delete(chatDao.getChat(chatId));
+                List<Chat> newList = chatDao.getChatById(userID);
                 adapter.refreshList(newList);
                 dialog.dismiss();
             }

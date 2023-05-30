@@ -24,12 +24,11 @@ public interface ChatDao {
     void updateLastMessageDate(String date, int id);
     @Query("SELECT botName FROM chat, bot, user WHERE chatId = :chatId AND chat.botId = bot.botId")
     String getBotNameByChatId(int chatId);
-
-    @Query("delete from chat where chatId = :chatId")
-    void deleteChatById(int chatId);
     @Insert
     void insert(Chat chat);
 
+    @Query("select * from chat where chatId = :chatId")
+    Chat getChat(int chatId);
     @Delete
     void delete(Chat chat);
 

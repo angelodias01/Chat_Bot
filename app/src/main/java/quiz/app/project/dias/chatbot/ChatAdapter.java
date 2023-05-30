@@ -70,7 +70,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             @Override
             public boolean onLongClick(View v) {
                 if (eventListener != null) {
-                    eventListener.onContactLongClicked(chatDao.getChatIdByUser(chat.getUserId()));
+                    eventListener.onContactLongClicked(chat.getChatId());
                     return true;
                 } else {
                     return false;
