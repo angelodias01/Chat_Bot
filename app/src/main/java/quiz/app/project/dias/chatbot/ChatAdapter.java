@@ -1,6 +1,7 @@
 package quiz.app.project.dias.chatbot;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +10,25 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+
+import quiz.app.project.dias.chatbot.Database.AppDatabase;
 import quiz.app.project.dias.chatbot.Database.Chat;
+import quiz.app.project.dias.chatbot.Database.ChatDao;
 import quiz.app.project.dias.chatbot.Database.Messages;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder>{
 
     private List<Chat> chatList;
+    private Context context;
     private List<Messages> messagesList;
     private ChatAdapterEventListener eventListener;
 
-    public ChatAdapter(List<Chat> chatList, List<Messages> messageList, ChatAdapterEventListener eventListener) {
+    public ChatAdapter(List<Chat> chatList, List<Messages> messageList, ChatAdapterEventListener eventListener, Context context) {
         // armazenar na variável de instância o valor do parâmetro do construtor
         this.chatList = chatList;
         this.messagesList = messagesList;
         this.eventListener = eventListener;
+        this.context = context;
     }
 
     @NonNull
@@ -35,11 +41,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChatAdapter.ChatViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         final Chat chat = this.chatList.get(position);
+        holder.context = this.context;
+        AppDatabase db = AppDatabase.getInstance(context);
+        ChatDao chatDao = db.getChatDao();
+
+        Log.i("chat id", "onBindViewHolder: " + chat.getChatId());
 
         holder.lblLastDateChat.setText(chat.getLastMessageDate());
         holder.lblLastMsgChat.setText(chat.getLastMessage());
+        holder.lblBotNameChat.setText(chatDao.getBotNameByChatId(chat.getChatId()));
 
         if (chat.getLastMessage() != null) {
             holder.lblLastDateChat.setText(chat.getLastMessage());
@@ -58,7 +70,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             @Override
             public boolean onLongClick(View v) {
                 if (eventListener != null) {
-                    eventListener.onContactLongClicked(chat.getChatId());
+                    eventListener.onContactLongClicked(chatDao.getChatIdByUser(chat.getUserId()));
                     return true;
                 } else {
                     return false;

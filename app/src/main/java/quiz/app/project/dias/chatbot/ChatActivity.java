@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -25,7 +26,9 @@ import quiz.app.project.dias.chatbot.Log_Reg_Activities.LoginActivity;
 public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatAdapterEventListener{
     private static final String userId = "userId";
     public int userID;
+    public int chatId;
     private ChatAdapter adapter;
+    TextView lblBotNameChat;
     Button btnConfig, btnChatLogout;
     FloatingActionButton btnAddMsg;
     @Override
@@ -45,7 +48,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
     MessagesDao messageDAO = db.getMessageDao();
 
     // criar um objeto do tipo ChatAdapter (que extende Adapter)
-    this.adapter = new  ChatAdapter(chatDao.getChatById(userID),messageDAO.getLastMessage(), this);
+    this.adapter = new  ChatAdapter(chatDao.getChatById(userID),messageDAO.getLastMessage(), this, this.getApplicationContext());
     // ContactAdapter adapter = new ContactAdapter(AppDatabase.getInstance(this).getContactDao().getAll());
 
     // criar um objecto do tipo LinearLayoutManager para ser utilizado na RecyclerView
@@ -73,22 +76,23 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
     }
 
     @Override
-    public void onContactLongClicked(int chatId) {
+    public void onContactLongClicked(int chatId){
         ChatDao chatDao = AppDatabase.getInstance(ChatActivity.this).getChatDao();
         List<Chat> chat= chatDao.getChatById(chatId);
+        String botname = chatDao.getBotNameByChatId(chatId);
 
         // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         // 2. Chain together various setter methods to set the dialog characteristics
         builder.setTitle("Delete chat");
-        builder.setMessage("Do you really want to delete \"" + chat + "\" ?");
+        builder.setMessage("Do you really want to delete your chat with \"" + botname + "\" ?");
 
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                chatDao.delete((Chat) chat);
-                List<Chat> newList = chatDao.getChatById(userID);
+                chatDao.deleteChatById(chatId);
+                List<Chat> newList = chatDao.getChatById(chatId);
                 adapter.refreshList(newList);
                 dialog.dismiss();
             }
@@ -100,7 +104,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
                 dialog.dismiss();
             }
         });
-
         // 3. Get the <code><a href="/reference/android/app/AlertDialog.html">AlertDialog</a></code> from <code><a href="/reference/android/app/AlertDialog.Builder.html#create()">create()</a></code>
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -109,10 +112,13 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
     @Override
     protected void onResume() {
         super.onResume();
+        AppDatabase db = AppDatabase.getInstance(ChatActivity.this);
+        ChatDao chatDao = db.getChatDao();
 
         this.btnConfig= findViewById(R.id.btnConfig);
         this.btnAddMsg = findViewById(R.id.btnAddMsg);
         this.btnChatLogout = findViewById(R.id.btnChatLogout);
+        this.lblBotNameChat = findViewById(R.id.lblBotNameChat);
         btnConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +156,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
             }
         });
     }
-
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)

@@ -14,13 +14,19 @@ public interface ChatDao {
     List<Chat> getAll();
 
 
-    @Query("SELECT * FROM chat WHERE chatID = :chatId")
-    List<Chat> getChatById(int chatId);
+    @Query("SELECT * FROM chat WHERE userId = :userId")
+    List<Chat> getChatById(int userId);
+    @Query("SELECT chatId FROM chat WHERE userId = :userId")
+    int getChatIdByUser(int userId);
 
 
     @Query("UPDATE chat SET lastMessageDate = :date WHERE chatID = :id ")
     void updateLastMessageDate(String date, int id);
+    @Query("SELECT botName FROM chat, bot, user WHERE chatId = :chatId AND chat.botId = bot.botId")
+    String getBotNameByChatId(int chatId);
 
+    @Query("delete from chat where chatId = :chatId")
+    void deleteChatById(int chatId);
     @Insert
     void insert(Chat chat);
 
