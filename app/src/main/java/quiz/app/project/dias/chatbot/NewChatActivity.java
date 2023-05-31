@@ -3,6 +3,7 @@ package quiz.app.project.dias.chatbot;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -22,50 +23,57 @@ public class NewChatActivity extends AppCompatActivity {
     private BotAdapter adapter;
     private static final String userId = "userId";
     public int userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_ChatBot);
         setContentView(R.layout.new_chat_activity);
+
+        // Retrieve the user ID from the intent extras
         Bundle bundle = getIntent().getExtras();
         this.userID = bundle.getInt(this.userId, 0);
 
-        // obter uma referência para a RecyclerView que existe no layout da MainActivity
+        // Obtain a reference to the RecyclerView in the activity layout
         RecyclerView recyclerView = findViewById(R.id.recyclerViewBots);
 
-        // obter uma instância do ContactDao
+        // Obtain an instance of BotDao from the app database
         AppDatabase db = AppDatabase.getInstance(this);
         BotDao botDao = db.getBotDao();
 
-        // criar um objeto do tipo ContactAdapter (que extende Adapter)
-        // ContactAdapter adapter = new ContactAdapter(MemoryDatabase.getAllContacts());
-        this.adapter = new BotAdapter(this.getApplicationContext(),userID);
-        // ContactAdapter adapter = new ContactAdapter(AppDatabase.getInstance(this).getContactDao().getAll());
+        // Create an instance of BotAdapter and pass the application context and user ID
+        this.adapter = new BotAdapter(this.getApplicationContext(), userID);
 
-        // criar um objecto do tipo LinearLayoutManager para ser utilizado na RecyclerView
-        // o LinearLayoutManager tem como orientação default a orientação Vertical
+        // Create an instance of LinearLayoutManager for the RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-        // Definir que a RecyclerView utiliza como Adapter o objeto que criámos anteriormente
+        // Set the adapter and layout manager to the RecyclerView
         recyclerView.setAdapter(this.adapter);
-        // Definir que a RecyclerView utiliza como LayoutManager o objeto que criámos anteriormente
         recyclerView.setLayoutManager(layoutManager);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
+
+        // Retrieve the latest list of bots from the database and update the adapter
         List<Bot> newBotList = AppDatabase.getInstance(this).getBotDao().getAllBots();
         this.adapter.refreshList(newBotList);
+
+        // Log the number of bots
+        Log.i("NewChatActivity", "Number of bots: " + newBotList.size());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        this.btnBack = findViewById(R.id.btnBackConfig);
 
+        // Set the click listener for the back button
+        this.btnBack = findViewById(R.id.btnBackConfig);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Navigate back to the ChatActivity when the button is clicked
                 Intent intent = new Intent(NewChatActivity.this, ChatActivity.class);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(NewChatActivity.this).toBundle();
                 finish();

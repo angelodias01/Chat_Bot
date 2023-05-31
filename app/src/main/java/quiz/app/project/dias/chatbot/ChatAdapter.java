@@ -1,6 +1,7 @@
 package quiz.app.project.dias.chatbot;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,8 @@ import quiz.app.project.dias.chatbot.Database.Chat;
 import quiz.app.project.dias.chatbot.Database.ChatDao;
 import quiz.app.project.dias.chatbot.Database.Messages;
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder>{
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
+    private static final String TAG = "ChatAdapter"; // Log tag for debugging
 
     private List<Chat> chatList;
     private Context context;
@@ -22,7 +24,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     private ChatAdapterEventListener eventListener;
 
     public ChatAdapter(List<Chat> chatList, List<Messages> messageList, ChatAdapterEventListener eventListener, Context context) {
-        // armazenar na variável de instância o valor do parâmetro do construtor
+        // Store in the instance variables the values of the constructor parameters
         this.chatList = chatList;
         this.messagesList = messagesList;
         this.eventListener = eventListener;
@@ -31,10 +33,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
     @NonNull
     @Override
-    public ChatAdapter.ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Criar um objeto do tipo View com base no layout criado (chat_item.xml)
+    public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Create a view object based on the layout created (chat_item.xml)
         View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, parent, false);
-        // criar e devolver um objeto do tipo ContactViewHolder
+        // Create and return an object of the ChatViewHolder type
         return new ChatViewHolder(rootView, parent.getContext());
     }
 
@@ -45,23 +47,29 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         AppDatabase db = AppDatabase.getInstance(context);
         ChatDao chatDao = db.getChatDao();
 
+        // Bind data to the views in the view holder
         holder.lblLastDateChat.setText(chat.getLastMessageDate());
         holder.lblLastMsgChat.setText(chat.getLastMessage());
         holder.lblBotNameChat.setText(chatDao.getBotNameByChatId(chat.getChatId()));
 
+        // Check if the last message is null and update the text accordingly
         if (chat.getLastMessage() != null) {
             holder.lblLastDateChat.setText(chat.getLastMessage());
         } else {
             holder.lblLastDateChat.setText("");
         }
 
+        // Set click listener for the chat item
         holder.ConstraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (eventListener != null) eventListener.onChatClicked(chat.getChatId());
+                if (eventListener != null) {
+                    eventListener.onChatClicked(chat.getChatId());
+                }
             }
         });
 
+        // Set long click listener for the chat item
         holder.rootView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -74,6 +82,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             }
         });
 
+        // Log the bound chat item for debugging
+        Log.i(TAG, "Bound chat item at position " + position + ": " + chat.toString());
     }
 
     @Override
@@ -82,15 +92,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     public class ChatViewHolder extends RecyclerView.ViewHolder {
-
         private Context context;
         private View rootView;
         private TextView lblBotNameChat;
         private TextView lblLastMsgChat;
-
         private TextView lblLastDateChat;
-
         public ConstraintLayout ConstraintLayout;
+
         public ChatViewHolder(@NonNull View rootView, Context context) {
             super(rootView);
             this.context = context;

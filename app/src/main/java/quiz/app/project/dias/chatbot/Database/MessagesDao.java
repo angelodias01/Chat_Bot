@@ -8,35 +8,27 @@ import java.util.List;
 
 @Dao
 public interface MessagesDao {
-    // Retrieve all chats ordered by last message date in descending order
-    @Query("SELECT * FROM chat ORDER BY lastMessageDate DESC")
-    List<Chat> getAll();
+    // Retrieve all messages from the "Messages" table
+    @Query("SELECT * FROM Messages")
+    List<Messages> getAll();
 
-    // Retrieve chats by userId
-    @Query("SELECT * FROM chat WHERE userId = :userId")
-    List<Chat> getChatById(int userId);
+    // Retrieve the last message from a chat based on the senderId
+    @Query("SELECT * FROM Messages WHERE senderId = :id ORDER BY messageTime DESC LIMIT 1")
+    Messages getLastMessageFromChat(int id);
 
-    // Retrieve chatId by userId
-    @Query("SELECT chatId FROM chat WHERE userId = :userId")
-    Chat getChatIdByUser(int userId);
+    // Retrieve the last messages from all chats
+    @Query("SELECT * FROM Messages ORDER BY messageTime DESC")
+    List<Messages> getLastMessage();
 
-    // Update last message date for a chat
-    @Query("UPDATE chat SET lastMessageDate = :date WHERE chatID = :id")
-    void updateLastMessageDate(String date, int id);
+    // Retrieve messages by chatId
+    @Query("SELECT * FROM Messages WHERE chatId = :chatId")
+    Messages getMessagesByChatId(int chatId);
 
-    // Retrieve bot name by chatId
-    @Query("SELECT botName FROM chat, bot, user WHERE chatId = :chatId AND chat.botId = bot.botId")
-    String getBotNameByChatId(int chatId);
-
-    // Insert a new chat
+    // Insert a new message
     @Insert
-    void insert(Chat chat);
+    void insert(Messages messages);
 
-    // Retrieve a chat by chatId
-    @Query("SELECT * FROM chat WHERE chatId = :chatId")
-    Chat getChat(int chatId);
-
-    // Delete a chat
+    // Delete a message
     @Delete
-    void delete(Chat chat);
+    void delete(Messages messages);
 }

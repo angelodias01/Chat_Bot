@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,13 +33,16 @@ public class RegisterActivity extends AppCompatActivity {
         setTheme(R.style.Theme_ChatBot);
         setContentView(R.layout.register_activity);
 
+        // Restoring saved instance state
         if (savedInstanceState != null) {
             restoreUsername = savedInstanceState.getString(username);
             restorePassword = savedInstanceState.getString(password);
         }
+
         this.tbUsername = findViewById(R.id.tbUsername);
         this.tbPassword = findViewById(R.id.tbPassword);
     }
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         tbUsername = findViewById(R.id.tbUsername);
@@ -60,18 +64,19 @@ public class RegisterActivity extends AppCompatActivity {
         TextView lblLogin = findViewById(R.id.lblLogin);
         Button btnRegister = findViewById(R.id.btnRegister);
 
+        // Click listener for "Login" label
         lblLogin.setOnClickListener(view1 -> {
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(RegisterActivity.this).toBundle();
             startActivity(intent, bundle);
         });
 
+        // Click listener for register button
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Database code
-                AppDatabase db = AppDatabase.getInstance(RegisterActivity.this);;
-
+                // Database code
+                AppDatabase db = AppDatabase.getInstance(RegisterActivity.this);
                 username = tbUsername.getText().toString();
                 password = tbPassword.getText().toString();
 
@@ -81,24 +86,27 @@ public class RegisterActivity extends AppCompatActivity {
 
                     // Post a runnable on the main/UI thread
                     handlers.post(() -> {
-                        if(Objects.equals(username, "")|| Objects.equals(password, "")){
-                            if(Objects.equals(username, "")){
+                        if (Objects.equals(username, "") || Objects.equals(password, "")) {
+                            if (Objects.equals(username, "")) {
                                 tbUsername.setError("Introduza o seu nome de utilizador!");
                                 tbUsername.requestFocus();
-                             }else if(Objects.equals(password, "")){
+                            } else if (Objects.equals(password, "")) {
                                 tbPassword.setError("Introduza a sua palavra-passe!");
                                 tbPassword.requestFocus();
                             }
-                        }else{
+                        } else {
                             Toast.makeText(RegisterActivity.this, "Conta criada com êxito!",
                                     Toast.LENGTH_SHORT).show();
-                            User newUser = new User(username,password);
+                            User newUser = new User(username, password);
                             AppDatabase.getInstance(RegisterActivity.this).getUserDao().insertAll(newUser);
                             executor.shutdown();
                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(RegisterActivity.this).toBundle();
                             finish();
                             startActivity(intent, bundle);
+
+                            // Logging the successful account creation
+                            Log.i("RegisterActivity", "Account created successfully!");
                         }
                     });
                 });

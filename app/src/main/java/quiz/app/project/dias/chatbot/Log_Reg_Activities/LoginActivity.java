@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,13 +38,16 @@ public class LoginActivity extends AppCompatActivity {
         setTheme(R.style.Theme_ChatBot);
         setContentView(R.layout.login_activity);
 
+        // Restoring saved instance state
         if (savedInstanceState != null) {
             restoreUsername = savedInstanceState.getString(username);
             restorePassword = savedInstanceState.getString(password);
         }
+
         this.tbUsername = findViewById(R.id.tbUsername);
         this.tbPassword = findViewById(R.id.tbPassword);
     }
+
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         tbUsername = findViewById(R.id.tbUsername);
@@ -65,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         tbPassword = findViewById(R.id.tbPassword);
         TextView lblCreateAcc = findViewById(R.id.lblCreateAcc);
 
+        // Click listener for creating a new account
         lblCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,10 +79,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Click listener for login button
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Database code
+                // Database code
                 AppDatabase db = AppDatabase.getInstance(LoginActivity.this);
                 UserDao userDao = db.getUserDao();
 
@@ -86,7 +92,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.execute(() -> {
+                    // Retrieving user from database
                     User user = userDao.getUserByUsernameAndPassword(username, password);
+
                     // Create a handler associated with the main/UI thread
                     Handler handlers = new Handler(Looper.getMainLooper());
 
@@ -97,6 +105,10 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             executor.shutdown();
                             int userID = userDao.getUserById(username, password);
+
+                            // Logging user ID
+                            Log.i("LoginActivity", "User ID: " + userID);
+
                             Intent intent = new Intent(LoginActivity.this, ChatActivity.class);
                             intent.putExtra("userId", userID);
                             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle();
@@ -128,8 +140,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setTitle("Deseja sair da aplicação?")
-                .setPositiveButton("Sim", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -139,5 +150,4 @@ public class LoginActivity extends AppCompatActivity {
                 .setNegativeButton("Não", null)
                 .show();
     }
-
 }

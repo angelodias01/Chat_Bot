@@ -6,6 +6,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import java.util.List;
 
@@ -24,18 +25,21 @@ public class MainScreenActivity extends AppCompatActivity {
         setTheme(R.style.Theme_ChatBot);
         setContentView(R.layout.main_screen_activity);
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        //event do automatic advance to the sign in screen!
+
+        // Event to automatically advance to the sign-in screen
         handler.postDelayed(() -> {
-            //Creating a fragment manager to change automatically from main fragment to the terms fragment.
+            // Creating a fragment manager to change automatically from the main fragment to the terms fragment
             Intent intent = new Intent(this, LoginActivity.class);
             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
             AppDatabase db = AppDatabase.getInstance(this);
+
             this.startActivity(intent, bundle);
             finish();
+
         }, delay);
     }
-
 }
