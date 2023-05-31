@@ -18,7 +18,9 @@ public class Messages {
     private int senderId;
     @ColumnInfo (name = "chatId")
     private int chatId;
-    public Messages(){}
+    public Messages(){
+        // Empty constructor required by Room
+    }
 
     public Messages(String Message, String messageTime, int senderId,int chatId) {
         this.Message = Message;

@@ -10,25 +10,35 @@ import java.util.List;
 
 @Dao
 public interface UserDao {
+    // Retrieve a user by username and password
     @Query("SELECT * FROM User WHERE username = :username AND password = :password")
     User getUserByUsernameAndPassword(String username, String password);
 
-    @Query("Select * from User")
+    // Retrieve all users from the "User" table
+    @Query("SELECT * FROM User")
     List<User> getAllUsers();
 
-    @Query("SELECT userId FROM User WHERE username = :username and password = :password")
+    // Retrieve a user's ID by username and password
+    @Query("SELECT userId FROM User WHERE username = :username AND password = :password")
     int getUserById(String username, String password);
 
+    // Retrieve a user by username
     @Query("SELECT * FROM User WHERE username = :username")
     User getUserByEmail(String username);
 
+    // Retrieve a user by password
     @Query("SELECT * FROM User WHERE password = :password")
     User getUserByPassword(String password);
 
+    // Insert multiple users
     @Insert
     void insertAll(User... user);
+
+    // Update a user
     @Update
     void updateAll(User user);
+
+    // Delete all users
     @Query("DELETE FROM User")
     void deleteAll();
 }

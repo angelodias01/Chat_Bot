@@ -7,8 +7,11 @@ import androidx.room.Update;
 import java.util.List;
 @Dao
 public interface BotDao {
-        @Query("Select * from Bot")
+        // Retrieve all bots from the database
+        @Query("SELECT * FROM Bot")
         List<Bot> getAllBots();
-        @Query("Select botId from Bot where botName= :botName")
+
+        // Retrieve the botId for a given botName
+        @Query("SELECT botId FROM Bot WHERE botName = :botName")
         int getBotById(String botName);
 }

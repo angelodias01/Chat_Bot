@@ -16,7 +16,9 @@ public class BotMessages {
     private String botMessageSent;
     @ColumnInfo(name = "botId")
     private int botId;
-    public BotMessages() {}
+    public BotMessages() {
+        // Empty constructor required by Room
+    }
 
     public BotMessages( String receivedMessage, String botMessageSent, int botId) {
         //this.botMessageId = botMessageId;

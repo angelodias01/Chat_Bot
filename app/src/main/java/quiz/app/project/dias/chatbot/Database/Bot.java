@@ -15,7 +15,7 @@ public class Bot {
     private String botTipe;
 
     public Bot() {
-        // Empty constructor
+        // Empty constructor required by Room
     }
 
     public Bot(int botId, String botName, String botTipe) {
