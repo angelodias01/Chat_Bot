@@ -17,6 +17,8 @@ public interface MessagesDao {
 
     @Query("SELECT * FROM Messages ORDER BY messageTime DESC ")
     List<Messages> getLastMessage();
+    @Query("SELECT * FROM Messages WHERE chatId = :chatId")
+    Messages getMessagesByChatId(int chatId);
 
     @Insert
     void insert(Messages messages);

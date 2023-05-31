@@ -2,7 +2,6 @@ package quiz.app.project.dias.chatbot;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
-
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -57,16 +56,18 @@ public class ConfigActivity extends AppCompatActivity {
                                 executor.execute(() -> {
                                     // TODO Configs:
                                     chatDao.delete(chatDao.getChatIdByUser(userID));
-                                    //TODO set messages delete!!
-                                    //messagesDao.delete();
+                                    Chat chatId = chatDao.getChatIdByUser(userID);
+                                    //TODO next code im not sure if it works!!
+                                    messagesDao.delete(messagesDao.getMessagesByChatId(chatId.getChatId()));
                                     //TODO set by userid!!
                                     List chatList = chatDao.getChatById(userID);
-                                    List messageList = messagesDao.getAll();
+                                    //List messageList = messagesDao.getMessagesByChatId(chatDao.getChatIdByUser(userID));
 
-                                    runOnUiThread(new Runnable() { //A linha abaixo foi retirada do stackoverflow visto que tinha um erro de UI lock e a unica opção que deu foi esta!
+                                    runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            if (chatList != null && messageList != null) {
+                                            //&& messageList != null
+                                            if (chatList != null ) {
                                                 Toast.makeText(ConfigActivity.this, "Dados limpos com sucesso!", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(ConfigActivity.this,MainScreenActivity.class);
                                                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();

@@ -26,10 +26,10 @@ public abstract class AppDatabase extends RoomDatabase {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
                             super.onCreate(db);
-                            //code not working!!!
                             db.execSQL("INSERT INTO User VALUES (1, 'admin', 'admin')");
                             db.execSQL("INSERT INTO Bot VALUES(1,'Bot Agressivo', 'Agressivo')," +
                                     "(2,'Bot Normal', 'Normal'),(3,'Bot Amigavel', 'Amigavel')");
+                            db.execSQL("insert into botmessages values('Olá', 'O que queres?',1),('Olá', 'Alõ',2),('Olá', 'Olá, tudo bem?',3)");
                         }
                     })
                     .build();

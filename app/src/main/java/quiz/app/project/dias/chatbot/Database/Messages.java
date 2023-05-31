@@ -2,9 +2,10 @@ package quiz.app.project.dias.chatbot.Database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Messages")
+@Entity(tableName = "Messages",foreignKeys = @ForeignKey(entity = Chat.class, parentColumns = "chatId", childColumns = "chatId"))
 public class Messages {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "messagesId")
@@ -15,14 +16,16 @@ public class Messages {
     private String messageTime;
     @ColumnInfo(name = "senderId")
     private int senderId;
-
+    @ColumnInfo (name = "chatId")
+    private int chatId;
     public Messages(){}
 
-    public Messages(int messageId, String Message, String messageTime, int senderId) {
+    public Messages(int messageId, String Message, String messageTime, int senderId,int chatId) {
         this.messageId = messageId;
         this.Message = Message;
         this.messageTime = messageTime;
         this.senderId = senderId;
+        this.chatId = chatId;
     }
 
     public int getMessageId() {
@@ -55,5 +58,11 @@ public class Messages {
 
     public void setSenderId(int userId) {
         this.senderId = senderId;
+    }
+    public int getChatId() {
+        return chatId;
+    }
+    public void setChatId(int chatId) {
+        this.chatId = chatId;
     }
 }

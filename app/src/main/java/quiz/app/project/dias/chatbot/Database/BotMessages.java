@@ -17,17 +17,14 @@ public class BotMessages {
     private String receivedMessage;
     @ColumnInfo(name = "botMessage")
     private String botMessageSent;
-    @ColumnInfo(name = "botMessageTime")
-    private String botMessageTime;
     @ColumnInfo(name = "botId")
     private int botId;
     public BotMessages() {}
 
-    public BotMessages(int botMessageId, String receivedMessage, String botMessageSent, String botMessageTime, int botId) {
-        this.botMessageId = botMessageId;
+    public BotMessages( String receivedMessage, String botMessageSent, int botId) {
+        //this.botMessageId = botMessageId;
         this.receivedMessage = receivedMessage;
         this.botMessageSent = botMessageSent;
-        this.botMessageTime = botMessageTime;
         this.botId = botId;
     }
 
@@ -53,14 +50,6 @@ public class BotMessages {
 
     public void setBotMessageSent(String botMessageSent) {
         this.botMessageSent = botMessageSent;
-    }
-
-    public String getBotMessageTime() {
-        return botMessageTime;
-    }
-
-    public void setBotMessageTime(String botMessageTime) {
-        this.botMessageTime = botMessageTime;
     }
 
     public int getBotId() {
