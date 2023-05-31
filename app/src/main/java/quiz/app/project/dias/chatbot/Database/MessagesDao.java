@@ -1,6 +1,7 @@
 package quiz.app.project.dias.chatbot.Database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -19,4 +20,6 @@ public interface MessagesDao {
 
     @Insert
     void insert(Messages messages);
+    @Delete
+    void delete(Messages messages);
 }

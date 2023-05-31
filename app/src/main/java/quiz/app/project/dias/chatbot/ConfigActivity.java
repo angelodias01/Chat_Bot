@@ -15,15 +15,22 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import quiz.app.project.dias.chatbot.Database.AppDatabase;
+import quiz.app.project.dias.chatbot.Database.Chat;
+import quiz.app.project.dias.chatbot.Database.ChatDao;
+import quiz.app.project.dias.chatbot.Database.MessagesDao;
 import quiz.app.project.dias.chatbot.Database.UserDao;
 import quiz.app.project.dias.chatbot.Log_Reg_Activities.LoginActivity;
 
 public class ConfigActivity extends AppCompatActivity {
     private Button btnLimpar, btnBackConfig, btnLogoutConfig;
+    private static final String userId = "userId";
+    public int userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
+        Bundle bundle = getIntent().getExtras();
+        this.userID = bundle.getInt(this.userId, 0);
     }
 
     @Override
@@ -36,9 +43,10 @@ public class ConfigActivity extends AppCompatActivity {
         btnLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Database code
                 AppDatabase db = Room.databaseBuilder(ConfigActivity.this, AppDatabase.class, "AppDatabase").build();
                 UserDao userDao = db.getUserDao();
+                ChatDao chatDao = db.getChatDao();
+                MessagesDao messagesDao = db.getMessageDao();
 
                 new AlertDialog.Builder(ConfigActivity.this)
                         .setTitle("Deseja limpar os dados da aplicação?")
@@ -48,14 +56,17 @@ public class ConfigActivity extends AppCompatActivity {
                                 ExecutorService executor = Executors.newSingleThreadExecutor();
                                 executor.execute(() -> {
                                     // TODO Configs:
-                                    //Change for messages and chats.
-                                    userDao.deleteAll();
-                                    List userList = userDao.getAllUsers();
+                                    chatDao.delete(chatDao.getChatIdByUser(userID));
+                                    //TODO set messages delete!!
+                                    //messagesDao.delete();
+                                    //TODO set by userid!!
+                                    List chatList = chatDao.getChatById(userID);
+                                    List messageList = messagesDao.getAll();
 
                                     runOnUiThread(new Runnable() { //A linha abaixo foi retirada do stackoverflow visto que tinha um erro de UI lock e a unica opção que deu foi esta!
                                         @Override
                                         public void run() {
-                                            if (userList != null) {
+                                            if (chatList != null && messageList != null) {
                                                 Toast.makeText(ConfigActivity.this, "Dados limpos com sucesso!", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(ConfigActivity.this,MainScreenActivity.class);
                                                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();

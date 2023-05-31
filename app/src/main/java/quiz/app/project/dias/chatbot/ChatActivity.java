@@ -124,6 +124,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
             public void onClick(View v) {
                 Intent intent = new Intent(ChatActivity.this, ConfigActivity.class);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ChatActivity.this).toBundle();
+                intent.putExtra("chatId", chatId);
                 ChatActivity.this.startActivity(intent, bundle);
             }
         });

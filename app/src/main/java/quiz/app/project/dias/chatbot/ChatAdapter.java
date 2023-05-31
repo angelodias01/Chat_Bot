@@ -47,8 +47,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         AppDatabase db = AppDatabase.getInstance(context);
         ChatDao chatDao = db.getChatDao();
 
-        Log.i("chat id", "onBindViewHolder: " + chat.getChatId());
-
         holder.lblLastDateChat.setText(chat.getLastMessageDate());
         holder.lblLastMsgChat.setText(chat.getLastMessage());
         holder.lblBotNameChat.setText(chatDao.getBotNameByChatId(chat.getChatId()));
