@@ -1,12 +1,9 @@
 package quiz.app.project.dias.chatbot.Database;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Dao;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
-
-import java.sql.Time;
 
 @Entity(tableName = "BotMessages",foreignKeys = @ForeignKey(entity = Bot.class, parentColumns = "botId", childColumns = "botId"))
 public class BotMessages {

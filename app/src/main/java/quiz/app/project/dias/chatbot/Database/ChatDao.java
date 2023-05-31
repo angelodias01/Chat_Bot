@@ -9,16 +9,13 @@ import java.util.List;
 @Dao
 public interface ChatDao {
 
-
     @Query("SELECT * FROM chat ORDER BY lastMessageDate DESC")
     List<Chat> getAll();
-
 
     @Query("SELECT * FROM chat WHERE userId = :userId")
     List<Chat> getChatById(int userId);
     @Query("SELECT chatId FROM chat WHERE userId = :userId")
     Chat getChatIdByUser(int userId);
-
 
     @Query("UPDATE chat SET lastMessageDate = :date WHERE chatID = :id ")
     void updateLastMessageDate(String date, int id);

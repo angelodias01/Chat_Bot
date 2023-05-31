@@ -20,8 +20,7 @@ public class Messages {
     private int chatId;
     public Messages(){}
 
-    public Messages(int messageId, String Message, String messageTime, int senderId,int chatId) {
-        this.messageId = messageId;
+    public Messages(String Message, String messageTime, int senderId,int chatId) {
         this.Message = Message;
         this.messageTime = messageTime;
         this.senderId = senderId;

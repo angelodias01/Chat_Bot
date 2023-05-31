@@ -55,10 +55,10 @@ public class ConfigActivity extends AppCompatActivity {
                                 ExecutorService executor = Executors.newSingleThreadExecutor();
                                 executor.execute(() -> {
                                     // TODO Configs:
-                                    chatDao.delete(chatDao.getChatIdByUser(userID));
                                     Chat chatId = chatDao.getChatIdByUser(userID);
                                     //TODO next code im not sure if it works!!
                                     messagesDao.delete(messagesDao.getMessagesByChatId(chatId.getChatId()));
+                                    chatDao.delete(chatDao.getChatIdByUser(userID));
                                     //TODO set by userid!!
                                     List chatList = chatDao.getChatById(userID);
                                     //List messageList = messagesDao.getMessagesByChatId(chatDao.getChatIdByUser(userID));
