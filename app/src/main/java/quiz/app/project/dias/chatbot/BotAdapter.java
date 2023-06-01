@@ -30,7 +30,7 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
     // instance variable that stores the list of bot and the context that this adapter will use
     private List<Bot> botList;
     private Context context;
-
+    private static final String userId = "userId";
     public int userID;
     int botID;
 
@@ -48,6 +48,7 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
         // create a view object based on the layout created (bot_item.xml)
         View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatbots, parent, false);
         // create and return an object of the bot view holder type
+
         return new botViewHolder(rootView, parent.getContext());
     }
 
@@ -85,7 +86,7 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
 
         chatDao.insert(chat);
 
-        Log.i(TAG, "Created chat: " + chat.toString()); // Log the created chat
+        Log.i(TAG, "Created chat: " + chat); // Log the created chat
     }
 
     public static String minuteFormater(Calendar calendar) {

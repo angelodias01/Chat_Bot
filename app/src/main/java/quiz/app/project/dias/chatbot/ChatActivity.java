@@ -148,6 +148,9 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
         AppDatabase db = AppDatabase.getInstance(ChatActivity.this);
         ChatDao chatDao = db.getChatDao();
 
+        Bundle bundle = getIntent().getExtras();
+        this.userID = bundle.getInt(this.userId, 0);
+
         this.btnConfig = findViewById(R.id.btnConfig);
         this.btnAddMsg = findViewById(R.id.btnAddMsg);
         this.btnChatLogout = findViewById(R.id.btnChatLogout);

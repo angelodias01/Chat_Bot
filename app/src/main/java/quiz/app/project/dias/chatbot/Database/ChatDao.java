@@ -17,7 +17,7 @@ public interface ChatDao {
     List<Chat> getChatById(int userId);
 
     // Retrieve chatId by userId
-    @Query("SELECT chatId FROM chat WHERE userId = :userId")
+    @Query("SELECT chatId, userId, botId FROM chat WHERE userId = :userId")
     Chat getChatIdByUser(int userId);
 
     // Update last message date for a chat
@@ -27,6 +27,8 @@ public interface ChatDao {
     // Retrieve bot name by chatId
     @Query("SELECT botName FROM chat, bot, user WHERE chatId = :chatId AND chat.botId = bot.botId")
     String getBotNameByChatId(int chatId);
+    @Query("DELETE FROM messages WhERE messages.chatId IN (SELECT chat.chatId FROM chat WHERE chat.userId = :userId)")
+    void deleteChat(int userId);
 
     // Insert a new chat
     @Insert
@@ -34,9 +36,9 @@ public interface ChatDao {
 
     // Retrieve a chat by chatId
     @Query("SELECT * FROM chat WHERE chatId = :chatId")
-    Chat getChat(int chatId);
+    List<Chat> getChat(int chatId);
 
     // Delete a chat
     @Delete
-    void delete(Chat chat);
+    void delete(List<Chat> chat);
 }

@@ -20,6 +20,9 @@ public interface MessagesDao {
     @Query("SELECT * FROM Messages ORDER BY messageTime DESC")
     List<Messages> getLastMessage();
 
+    @Query("Delete from Messages where chatId = :chatId")
+    void deleteFromChatId(int chatId);
+
     // Retrieve messages by chatId
     @Query("SELECT * FROM Messages WHERE chatId = :chatId")
     Messages getMessagesByChatId(int chatId);

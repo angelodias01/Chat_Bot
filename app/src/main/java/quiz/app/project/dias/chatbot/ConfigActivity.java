@@ -64,17 +64,12 @@ public class ConfigActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 ExecutorService executor = Executors.newSingleThreadExecutor();
                                 executor.execute(() -> {
-                                    // TODO Configs:
-                                    // Get chat ID by user ID
-                                    Chat chatId = chatDao.getChatIdByUser(userID);
-                                    Log.i("ConfigActivity", "Chat ID: " + chatId.getChatId());
+                                    List<Chat> chatId = chatDao.getChatById(userID);
+                                    Log.i("ConfigActivity", "Chat ID: " + chatId);
 
-                                    // Delete messages and chat associated with the user ID
-                                    messagesDao.delete(messagesDao.getMessagesByChatId(chatId.getChatId()));
-                                    chatDao.delete(chatDao.getChatIdByUser(userID));
+                                    chatDao.deleteChat(userID);
                                     Log.i("ConfigActivity", "Messages and Chat deleted for User ID: " + userID);
 
-                                    // Get chat list by user ID (TODO set by user ID!!)
                                     List chatList = chatDao.getChatById(userID);
                                     Log.i("ConfigActivity", "Chat List size: " + chatList.size());
 
@@ -85,8 +80,9 @@ public class ConfigActivity extends AppCompatActivity {
                                                 // Show success message and navigate to MainScreenActivity
                                                 Toast.makeText(ConfigActivity.this, "Dados limpos com sucesso!", Toast.LENGTH_SHORT).show();
                                                 Log.i("ConfigActivity", "Data cleared successfully");
-                                                Intent intent = new Intent(ConfigActivity.this, MainScreenActivity.class);
+                                                Intent intent = new Intent(ConfigActivity.this, ChatActivity.class);
                                                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();
+                                                intent.putExtra("userId", userID);
                                                 ConfigActivity.this.startActivity(intent, bundle);
                                                 finishAffinity();
                                             } else {

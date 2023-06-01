@@ -1,11 +1,18 @@
 package quiz.app.project.dias.chatbot.Database;
 
+import static java.nio.file.attribute.AclEntryPermission.DELETE;
+import static java.nio.file.attribute.AclEntryPermission.DELETE_CHILD;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Chat",foreignKeys = {@ForeignKey(entity = User.class, parentColumns = "userId", childColumns = "userId"), @ForeignKey(entity = Bot.class, parentColumns = "botId", childColumns = "botId")})
+@Entity(tableName = "Chat", foreignKeys = {
+        @ForeignKey(entity = User.class, parentColumns = "userId", childColumns = "userId",
+                onDelete = ForeignKey.CASCADE),
+        @ForeignKey(entity = Bot.class, parentColumns = "botId", childColumns = "botId",
+                onDelete = ForeignKey.CASCADE)})
 public class Chat {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "chatId")
