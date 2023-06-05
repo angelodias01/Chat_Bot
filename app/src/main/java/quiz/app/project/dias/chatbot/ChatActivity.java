@@ -100,7 +100,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
 
         // Get an instance of ChatDao and retrieve the chat and bot name
         ChatDao chatDao = AppDatabase.getInstance(ChatActivity.this).getChatDao();
-        List<Chat> chat = chatDao.getChatById(userID);
         String botname = chatDao.getBotNameByChatId(chatId);
 
         // Create an AlertDialog to confirm the deletion of the chat
