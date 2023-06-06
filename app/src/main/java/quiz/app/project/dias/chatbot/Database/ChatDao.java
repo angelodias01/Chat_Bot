@@ -27,7 +27,9 @@ public interface ChatDao {
     // Retrieve bot name by chatId
     @Query("SELECT botName FROM chat, bot, user WHERE chatId = :chatId AND chat.botId = bot.botId")
     String getBotNameByChatId(int chatId);
-    @Query("DELETE FROM messages WhERE messages.chatId IN (SELECT chat.chatId FROM chat WHERE chat.userId = :userId)")
+    @Query("DELETE FROM messages  WHERE messages.chatId IN (SELECT chat.chatId FROM chat WHERE chat.userId = :userId)")
+    void deleteMsg(int userId);
+    @Query("DELETE FROM chat WHERE chat.userId = :userId")
     void deleteChat(int userId);
 
     // Insert a new chat

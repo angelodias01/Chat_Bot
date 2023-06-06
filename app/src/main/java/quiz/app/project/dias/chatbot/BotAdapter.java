@@ -12,12 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import quiz.app.project.dias.chatbot.Database.AppDatabase;
 import quiz.app.project.dias.chatbot.Database.Bot;
 import quiz.app.project.dias.chatbot.Database.BotDao;
@@ -96,7 +94,6 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
         if (currentMinute < 10) {
             minutes = "0" + currentMinute;
         }
-
         return minutes;
     }
 

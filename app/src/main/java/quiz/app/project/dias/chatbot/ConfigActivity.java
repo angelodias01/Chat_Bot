@@ -46,6 +46,10 @@ public class ConfigActivity extends AppCompatActivity {
         this.btnBackConfig = findViewById(R.id.btnBackConfig);
         this.btnLogoutConfig = findViewById(R.id.btnLogoutConfig);
 
+        // Retrieve the user ID from the intent extras
+        Bundle bundle = getIntent().getExtras();
+        this.userID = bundle.getInt(this.userId, 0);
+
         // Set click listener for "Limpar" button
         btnLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,10 +68,11 @@ public class ConfigActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 ExecutorService executor = Executors.newSingleThreadExecutor();
                                 executor.execute(() -> {
-                                    List<Chat> chatId = chatDao.getChatById(userID);
-                                    Log.i("ConfigActivity", "Chat ID: " + chatId);
 
                                     chatDao.deleteChat(userID);
+                                    chatDao.deleteMsg(userID);
+
+                                    Log.i("ConfigActivity", "User ID: " + userID);
                                     Log.i("ConfigActivity", "Messages and Chat deleted for User ID: " + userID);
 
                                     List chatList = chatDao.getChatById(userID);

@@ -26,7 +26,8 @@
         android:background="@drawable/log_out"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewChats"
         app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/btnBackConfig"
@@ -38,7 +39,8 @@
         android:background="@drawable/bxs_left_arrow"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewChats"
         app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView6"

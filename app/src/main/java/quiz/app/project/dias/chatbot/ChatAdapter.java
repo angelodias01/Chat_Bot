@@ -74,7 +74,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
             @Override
             public boolean onLongClick(View v) {
                 if (eventListener != null) {
-                    eventListener.onContactLongClicked(chat.getChatId());
+                    eventListener.onChatLongClicked(chat.getChatId());
                     return true;
                 } else {
                     return false;
@@ -112,7 +112,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
     public interface ChatAdapterEventListener {
         void onChatClicked(int chatId);
-        void onContactLongClicked(int chatId);
+        void onChatLongClicked(int chatId);
     }
 
     public void refreshList(List<Chat> newChatList) {

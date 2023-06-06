@@ -95,7 +95,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
     }
 
     @Override
-    public void onContactLongClicked(int chatId) {
+    public void onChatLongClicked(int chatId) {
         Log.i(TAG, "onContactLongClicked");
 
         // Get an instance of ChatDao and retrieve the chat and bot name
@@ -149,7 +149,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
 
         Bundle bundle = getIntent().getExtras();
         this.userID = bundle.getInt(this.userId, 0);
-
         this.btnConfig = findViewById(R.id.btnConfig);
         this.btnAddMsg = findViewById(R.id.btnAddMsg);
         this.btnChatLogout = findViewById(R.id.btnChatLogout);
@@ -164,7 +163,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
                 // Start the ConfigActivity and pass the chatId as an extra
                 Intent intent = new Intent(ChatActivity.this, ConfigActivity.class);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ChatActivity.this).toBundle();
-                intent.putExtra("chatId", chatId);
+                intent.putExtra("userId", userID);
                 ChatActivity.this.startActivity(intent, bundle);
             }
         });
