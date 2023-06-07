@@ -76,6 +76,7 @@ public class ConfigActivity extends AppCompatActivity {
                                     Log.i("ConfigActivity", "Messages and Chat deleted for User ID: " + userID);
 
                                     List chatList = chatDao.getChatById(userID);
+                                    //List messageList = messagesDao.getMessagesByChatId(chatDao.getChatById(userID));
                                     Log.i("ConfigActivity", "Chat List size: " + chatList.size());
 
                                     runOnUiThread(new Runnable() {

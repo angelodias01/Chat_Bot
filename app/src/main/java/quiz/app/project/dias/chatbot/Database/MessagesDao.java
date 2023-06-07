@@ -24,8 +24,8 @@ public interface MessagesDao {
     void deleteFromChatId(int chatId);
 
     // Retrieve messages by chatId
-    @Query("SELECT * FROM Messages WHERE chatId = :chatId")
-    Messages getMessagesByChatId(int chatId);
+    @Query("SELECT * FROM Messages WHERE chatId = :chatId ORDER BY messageTime DESC")
+    List<Messages> getMessagesByChatId(int chatId);
 
     // Insert a new message
     @Insert
