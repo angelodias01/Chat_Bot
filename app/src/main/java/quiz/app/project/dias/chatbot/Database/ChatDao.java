@@ -21,8 +21,11 @@ public interface ChatDao {
     Chat getChatIdByUser(int userId);
 
     // Update last message date for a chat
-    @Query("UPDATE chat SET lastMessageDate = :date WHERE chatID = :id")
+    @Query("UPDATE chat SET lastMessageDate = :date WHERE chatID = :id ")
     void updateLastMessageDate(String date, int id);
+
+    @Query("UPDATE chat SET lastMessage = :lastMessage WHERE chatID = :id ")
+    void updateLastMessage(String lastMessage, int id);
 
     // Retrieve bot name by chatId
     @Query("SELECT botName FROM chat, bot, user WHERE chatId = :chatId AND chat.botId = bot.botId")

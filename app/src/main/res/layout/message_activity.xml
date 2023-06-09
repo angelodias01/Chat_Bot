@@ -32,13 +32,13 @@
         android:id="@+id/recyclerViewMessages"
         android:layout_width="410dp"
         android:layout_height="605dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextText"
+        app:layout_constraintBottom_toTopOf="@+id/tbMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view4" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/tbMessage"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="4dp"
@@ -51,12 +51,12 @@
         android:textColorHint="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/btnSend"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="Autofill,HardcodedText,TextContrastCheck,VisualLintTextFieldSize" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnSend"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="4dp"

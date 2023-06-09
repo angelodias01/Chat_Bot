@@ -18,7 +18,7 @@
         tools:srcCompat="@drawable/user" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/lblMessageSent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -30,7 +30,7 @@
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/lblDateSent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

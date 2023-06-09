@@ -8,23 +8,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import quiz.app.project.dias.chatbot.Database.AppDatabase;
+import quiz.app.project.dias.chatbot.Database.Messages;
 
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>{
-    List<Message> messageList;
+    List<Messages> messageList;
 
-    public MessagesAdapter(List<Message> messageList) {
+    public MessagesAdapter(List<Messages> messageList) {
         this.messageList = messageList;
     }
 
     @Override
     public int getItemViewType(int position) {
-        Message message = messageList.get(position);
+        Messages message = messageList.get(position);
         return message.getSender() == 0 ? 0 : 1;
     }
 
@@ -54,17 +54,18 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         if(getItemViewType(position) == 1 || getItemViewType(position) == 0){
             AppDatabase db = AppDatabase.getInstance(holder.context);
 
-            final Message messageList = this.messageList.get(position);
+            final Messages messageList = this.messageList.get(position);
 
             String chatName = db.getChatDao().getBotNameByChatId(messageList);
 
             if(messageList.senderId == 0){
                 chatName = "You";
             }
-
-            holder.lblLastDateChat.setText(messageList.getDate());
-            holder.lblBotName.setText(chatName);
-            holder.lblLastDateChat.setText(messageList.getMessage());
+            
+            holder.lblMessageSent.setText(messageList.getMessage());
+            holder.lblDateSent.setText(messageList.getDate());
+            holder.lblMessageReceived.setText(messageList.getMessage());
+            holder.lblDateReceived.setText(messageList.getDate());
 
         }
     }
@@ -78,19 +79,19 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
 
         private Context context;
         private View rootView;
-        private TextView lblBotName;
-        private TextView lblLastDateChat;
-        private TextView lblLastMsgChat;
-
+        private TextView lblMessageReceived, lblDateReceived;
+        private TextView lblMessageSent, lblDateSent;
+        
         private RecyclerView optionsRecyclerView;
 
         public MessageViewHolder(@NonNull View rootView, Context context) {
             super(rootView);
             this.context = context;
             this.rootView = rootView;
-            this.lblBotName = this.rootView.findViewById(R.id.lblBotName);
-            this.lblLastDateChat = this.rootView.findViewById(R.id.lblLastDateChat);
-            this.lblLastMsgChat = this.rootView.findViewById(R.id.lblLastMsgChat);
+            this.lblMessageReceived = this.rootView.findViewById(R.id.lblMessageReceived);
+            this.lblMessageSent = this.rootView.findViewById(R.id.lblMessageSent);
+            this.lblDateSent = this.rootView.findViewById(R.id.lblDateSent);
+            this.lblDateReceived = this.rootView.findViewById(R.id.lblDateReceived);
         }
     }
 
@@ -106,14 +107,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         }
     }
 
-    public class ExerciseViewHolder extends  MessageViewHolder{
-        public ExerciseViewHolder(@NonNull View rootView, Context context){
-            super(rootView, context);
-        }
-    }
-
-    public void refreshList(List<Message> newMessageList, Context context) {
-
+    public void refreshList(List<Messages> newMessageList, Context context) {
         this.messageList = newMessageList;
         notifyDataSetChanged();
     }
