@@ -22,9 +22,7 @@ public class NewChatActivity extends AppCompatActivity {
     private Button btnBack;
     private BotAdapter adapter;
     private static final String userId = "userId";
-    private static final String chatId = "chatId";
     public int userID;
-    public int chatID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +33,6 @@ public class NewChatActivity extends AppCompatActivity {
         // Retrieve the user ID from the intent extras
         Bundle bundle = getIntent().getExtras();
         this.userID = bundle.getInt(this.userId, 0);
-        this.chatID = bundle.getInt(this.chatId, 0);
 
         // Obtain a reference to the RecyclerView in the activity layout
         RecyclerView recyclerView = findViewById(R.id.recyclerViewBots);
@@ -45,7 +42,7 @@ public class NewChatActivity extends AppCompatActivity {
         BotDao botDao = db.getBotDao();
 
         // Create an instance of BotAdapter and pass the application context and user ID
-        this.adapter = new BotAdapter(this.getApplicationContext(), userID,chatID);
+        this.adapter = new BotAdapter(this.getApplicationContext(), userID);
 
         // Create an instance of LinearLayoutManager for the RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -70,8 +67,6 @@ public class NewChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Bundle bundle = getIntent().getExtras();
-        int chatID = bundle.getInt(chatId, 0);
         // Set the click listener for the back button
         this.btnBack = findViewById(R.id.btnBackConfig);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -81,9 +76,9 @@ public class NewChatActivity extends AppCompatActivity {
                 Intent intent = new Intent(NewChatActivity.this, ChatActivity.class);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(NewChatActivity.this).toBundle();
                 finish();
-                intent.putExtra("chatId", chatID);
                 startActivity(intent, bundle);
             }
         });
+
     }
 }
