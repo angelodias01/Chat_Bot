@@ -51,14 +51,14 @@ public class Messages {
     }
 
     public void setMessageTime(String messageTime) {
-        messageTime = messageTime;
+        this.messageTime = messageTime;
     }
 
     public int getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(int userId) {
+    public void setSenderId(int senderId) {
         this.senderId = senderId;
     }
     public int getChatId() {

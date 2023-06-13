@@ -28,12 +28,12 @@ import quiz.app.project.dias.chatbot.Database.MessagesDao;
 
 public class MessageActivity extends AppCompatActivity {
     private MessagesAdapter adapter;
-    private BotMessagesDao botMessagesDAO;
     private EditText tbMessage;
     private Button btnSend;
     private  LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private int chatID;
+    private BotMessagesDao botMessagesDAO;
     @SuppressLint("MissingInflatedId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class MessageActivity extends AppCompatActivity {
         AppDatabase db = AppDatabase.getInstance(this);
         ChatDao chatDao = db.getChatDao();
         MessagesDao messagesDao = db.getMessageDao();
-        BotMessagesDao botMessagesDAO = db.getBotMessagesDao();
+        botMessagesDAO = db.getBotMessagesDao();
 
         // criar um objeto do tipo MessageAdapter (que extende Adapter)
         this.adapter = new MessagesAdapter(messagesDao.getMessagesByChatId(chatID));

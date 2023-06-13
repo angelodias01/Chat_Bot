@@ -49,6 +49,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             // criar e devolver um objeto do tipo ContactViewHolder
             return new MessagesAdapter.MessageReceivedViewHolder(rootView, parent.getContext());
         }
+
     }
 
     @Override

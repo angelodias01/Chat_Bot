@@ -25,7 +25,6 @@ public class ConfigActivity extends AppCompatActivity {
     private Button btnLimpar, btnBackConfig, btnLogoutConfig;
     private static final String userId = "userId";
     public int userID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +111,7 @@ public class ConfigActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Navigate to ChatActivity
                 Intent intent = new Intent(ConfigActivity.this, ChatActivity.class);
+                intent.putExtra("userId", userID);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();
                 ConfigActivity.this.startActivity(intent, bundle);
                 finishAffinity();
@@ -146,6 +146,7 @@ public class ConfigActivity extends AppCompatActivity {
         super.onBackPressed();
         // Navigate to ChatActivity
         Intent intent = new Intent(ConfigActivity.this, ChatActivity.class);
+        intent.putExtra("userId", userID);
         Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ConfigActivity.this).toBundle();
         ConfigActivity.this.startActivity(intent, bundle);
         finish();
