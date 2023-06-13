@@ -29,15 +29,18 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
     private List<Bot> botList;
     private Context context;
     private static final String userId = "userId";
+    private static final String chatId = "chatId";
     public int userID;
+    private int chatID;
     int botID;
 
     // constructor that receives a bot list and the context to be used by this bot adapter
-    public BotAdapter(Context context, int userID) {
+    public BotAdapter(Context context, int userID,int chatID){
         // store in the instance variable the value of the constructor parameter
         this.botList = new ArrayList<>();
         this.context = context;
         this.userID = userID;
+        this.chatID = chatID;
     }
 
     @NonNull
@@ -58,12 +61,15 @@ public class BotAdapter extends RecyclerView.Adapter<BotAdapter.botViewHolder> {
         // set that the value of the text view in the view holder now contains the value of the bots name property
         holder.lblBotName.setText(bot.getBotName());
 
+
         holder.tvSelectBot.setOnClickListener(view1 -> {
             String botName = holder.lblBotName.getText().toString();
             AppDatabase db = AppDatabase.getInstance(context);
             BotDao botDao = db.getBotDao();
             botID = botDao.getBotById(botName);
             Intent intent = new Intent(context, MessageActivity.class);
+            intent.putExtra("userId", userID);
+            intent.putExtra("chatId", chatID);
             Bundle bundle = ActivityOptions.makeSceneTransitionAnimation((Activity) holder.context).toBundle();
             createChat(holder.context);
             holder.context.startActivity(intent, bundle);

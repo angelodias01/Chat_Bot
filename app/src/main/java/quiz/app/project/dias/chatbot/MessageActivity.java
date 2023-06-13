@@ -19,16 +19,21 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import quiz.app.project.dias.chatbot.Database.AppDatabase;
+import quiz.app.project.dias.chatbot.Database.Bot;
+import quiz.app.project.dias.chatbot.Database.BotMessages;
+import quiz.app.project.dias.chatbot.Database.BotMessagesDao;
 import quiz.app.project.dias.chatbot.Database.ChatDao;
 import quiz.app.project.dias.chatbot.Database.Messages;
 import quiz.app.project.dias.chatbot.Database.MessagesDao;
 
 public class MessageActivity extends AppCompatActivity {
     private MessagesAdapter adapter;
+    private BotMessagesDao botMessagesDAO;
     private EditText tbMessage;
     private Button btnSend;
     private  LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
+    private int chatID;
     @SuppressLint("MissingInflatedId")
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,7 @@ public class MessageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        int chatId = bundle.getInt("chatIDKey");
+        this.chatID = bundle.getInt("chatId");
 
         // obter uma referência para a RecyclerView que existe no layout da chatActivity
         recyclerView = findViewById(R.id.recyclerViewMessages);
@@ -49,9 +54,10 @@ public class MessageActivity extends AppCompatActivity {
         AppDatabase db = AppDatabase.getInstance(this);
         ChatDao chatDao = db.getChatDao();
         MessagesDao messagesDao = db.getMessageDao();
+        BotMessagesDao botMessagesDAO = db.getBotMessagesDao();
 
         // criar um objeto do tipo MessageAdapter (que extende Adapter)
-        this.adapter = new MessagesAdapter(messagesDao.getMessagesByChatId(chatId));
+        this.adapter = new MessagesAdapter(messagesDao.getMessagesByChatId(chatID));
 
 
         // criar um objecto do tipo LinearLayoutManager para ser utilizado na RecyclerView
@@ -91,21 +97,19 @@ public class MessageActivity extends AppCompatActivity {
 
                     currentDate += " " + hour;
 
-                    Messages newMessage = new Messages(message,currentDate, chatId, senderId);
+                    Messages newMessage = new Messages(message,currentDate, senderId, chatID);
 
                     messagesDao.insert(newMessage);
 
-                    db.getChatDao().updateLastMessageDate(currentDate,chatId);
-                    db.getChatDao().updateLastMessage(message, chatId);
+                    db.getChatDao().updateLastMessageDate(currentDate,chatID);
+                    db.getChatDao().updateLastMessage(message, chatID);
 
-                    List<Messages> newMessageList = db.getMessageDao().getMessagesByChatId(chatId);
+                    List<Messages> newMessageList = db.getMessageDao().getMessagesByChatId(chatID);
                     MessageActivity.this.adapter.refreshList(newMessageList, MessageActivity.this);
 
                     recyclerView.scrollToPosition(adapter.getItemCount()-1);
 
-                    botAnswer(chatId, currentDate, message, messagesDao, db);
-
-
+                    botAnswer(chatID, currentDate, message, messagesDao,botMessagesDAO, db);
                 }
             }
         });
@@ -129,20 +133,37 @@ public class MessageActivity extends AppCompatActivity {
         return minutes;
     }
 
-    public void botAnswer(int chatId, String currentDate, String message, MessagesDao messageDAO, AppDatabase db){
+    public void botAnswer(int chatId, String currentDate, String message, MessagesDao messageDAO, BotMessagesDao botMessagesDAO, AppDatabase db){
         int botSenderId = 1;
 
-        Messages newMessage = new Messages(0, chatId , botSenderId , currentDate);
+        Messages newMessage = new Messages(message, currentDate , botSenderId , chatId);
 
-        messageDAO.insert(newMessage);
+        int botIdinChat = AppDatabase.getInstance(this).getChatDao().getBotByChat(chatId);
 
-        db.getChatDao().updateLastMessageDate(currentDate,chatId);
-        db.getChatDao().updateLastMessage(botMessages, chatId);
+        int countWordsSimillar = botMessagesDAO.getBotMessagesByWord(message, botIdinChat);
 
-        List<Messages> newMessageList = db.getMessageDao().getMessagesByChatId(chatId);
-        MessageActivity.this.adapter.refreshList(newMessageList, MessageActivity.this);
+        if (countWordsSimillar > 0){
+            Random random = new Random();
+            int randomNum = random.nextInt(countWordsSimillar);
 
-        recyclerView.scrollToPosition(adapter.getItemCount()-1);
+            BotMessagesDao botMessagesDao = db.getBotMessagesDao();
+            List<BotMessages> botMessagesList = botMessagesDao.getBotMessagesByWordList(message, botIdinChat);
+
+            String botMessages = botMessagesList.get(randomNum).getBotMessageSent();
+
+            newMessage = new Messages(botMessages, currentDate , botSenderId , chatId);
+
+            messageDAO.insert(newMessage);
+
+            db.getChatDao().updateLastMessageDate(currentDate,chatId);
+            db.getChatDao().updateLastMessage(botMessages, chatId);
+
+            List<Messages> newMessageList = db.getMessageDao().getMessagesByChatId(chatId);
+            MessageActivity.this.adapter.refreshList(newMessageList, MessageActivity.this);
+
+            recyclerView.scrollToPosition(adapter.getItemCount()-1);
+
+        }
 
     }
 }

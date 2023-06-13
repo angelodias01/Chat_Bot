@@ -16,6 +16,11 @@ public interface ChatDao {
     @Query("SELECT * FROM chat WHERE userId = :userId")
     List<Chat> getChatById(int userId);
 
+    // Retreive the botId by chatId
+    @Query("SELECT botId FROM chat WHERE chatId = :chatId")
+    int getBotByChat(int chatId);
+
+
     // Retrieve chatId by userId
     @Query("SELECT chatId, userId, botId FROM chat WHERE userId = :userId")
     Chat getChatIdByUser(int userId);

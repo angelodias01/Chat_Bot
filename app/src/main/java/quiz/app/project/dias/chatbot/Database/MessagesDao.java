@@ -13,11 +13,11 @@ public interface MessagesDao {
     List<Messages> getAll();
 
     // Retrieve the last message from a chat based on the senderId
-    @Query("SELECT * FROM Messages WHERE senderId = :id ORDER BY messageTime DESC LIMIT 1")
+    @Query("SELECT * FROM Messages WHERE senderId = :id ORDER BY messageTime ASC LIMIT 1")
     Messages getLastMessageFromChat(int id);
 
     // Retrieve the last messages from all chats
-    @Query("SELECT * FROM Messages ORDER BY messageTime DESC")
+    @Query("SELECT * FROM Messages ORDER BY messageTime ASC")
     List<Messages> getLastMessage();
 
     @Query("Delete from Messages where chatId = :chatId")

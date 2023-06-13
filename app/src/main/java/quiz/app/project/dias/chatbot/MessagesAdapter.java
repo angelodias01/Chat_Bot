@@ -25,7 +25,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     @Override
     public int getItemViewType(int position) {
         Messages message = messageList.get(position);
-        return message.getSender() == 0 ? 0 : 1;
+
+        if(message.getSenderId() == 0){
+            return 0;
+        }
+        else{
+            return 1;
+        }
     }
 
     @NonNull
@@ -37,36 +43,25 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
             // criar e devolver um objeto do tipo ContactViewHolder
             return new MessagesAdapter.MessageSentViewHolder(rootView, parent.getContext());
         }
-        else if(viewType == 1) {
+        else{
             // Criar um objeto do tipo View com base no layout criado (message_item.xml)
             View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.received_message_item, parent, false);
             // criar e devolver um objeto do tipo ContactViewHolder
             return new MessagesAdapter.MessageReceivedViewHolder(rootView, parent.getContext());
-        }
-        else {
-            return null;
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull MessagesAdapter.MessageViewHolder holder, int position) {
 
-        if(getItemViewType(position) == 1 || getItemViewType(position) == 0){
-            AppDatabase db = AppDatabase.getInstance(holder.context);
-
-            final Messages messageList = this.messageList.get(position);
-
-            String chatName = db.getChatDao().getBotNameByChatId(messageList);
-
-            if(messageList.senderId == 0){
-                chatName = "You";
-            }
-            
-            holder.lblMessageSent.setText(messageList.getMessage());
-            holder.lblDateSent.setText(messageList.getDate());
-            holder.lblMessageReceived.setText(messageList.getMessage());
-            holder.lblDateReceived.setText(messageList.getDate());
-
+        if (getItemViewType(position) == 0){
+            Messages message = messageList.get(position);
+            holder.lblMessageSent.setText(message.getMessage());
+            holder.lblDateSent.setText(message.getMessageTime());
+        }else{
+            Messages message = messageList.get(position);
+            holder.lblMessageReceived.setText(message.getMessage());
+            holder.lblDateReceived.setText(message.getMessageTime());
         }
     }
 

@@ -48,8 +48,6 @@ public class ConfigActivity extends AppCompatActivity {
 
         // Retrieve the user ID from the intent extras
         Bundle bundle = getIntent().getExtras();
-        this.userID = bundle.getInt(this.userId, 0);
-
         // Set click listener for "Limpar" button
         btnLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +68,7 @@ public class ConfigActivity extends AppCompatActivity {
                                 executor.execute(() -> {
 
                                     chatDao.deleteChat(userID);
-                                    chatDao.deleteMsg(userID);
+
 
                                     Log.i("ConfigActivity", "User ID: " + userID);
                                     Log.i("ConfigActivity", "Messages and Chat deleted for User ID: " + userID);

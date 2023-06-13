@@ -5,7 +5,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Messages",foreignKeys = @ForeignKey(entity = Chat.class, parentColumns = "chatId", childColumns = "chatId"))
+@Entity(tableName = "Messages",foreignKeys = @ForeignKey(entity = Chat.class, parentColumns = "chatId", childColumns = "chatId",
+        onDelete = ForeignKey.CASCADE))
 public class Messages {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "messagesId")

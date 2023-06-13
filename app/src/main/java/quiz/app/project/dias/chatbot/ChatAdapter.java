@@ -54,9 +54,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
         // Check if the last message is null and update the text accordingly
         if (chat.getLastMessage() != null) {
-            holder.lblLastDateChat.setText(chat.getLastMessage());
+            holder.lblLastMsgChat.setText(chat.getLastMessage());
         } else {
-            holder.lblLastDateChat.setText("");
+            holder.lblLastMsgChat.setText("");
         }
 
         // Set click listener for the chat item

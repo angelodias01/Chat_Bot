@@ -25,10 +25,11 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
 
     // Constant for the key used to pass the userId to the activity
     private static final String userId = "userId";
+    private static final String chatId = "chatId";
 
     // User and chat identifiers
     public int userID;
-    public int chatId;
+    public int chatID;
 
     // Adapter for the chat RecyclerView
     private ChatAdapter adapter;
@@ -52,6 +53,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
         // Retrieve the userId from the extras passed to the activity
         Bundle bundle = getIntent().getExtras();
         this.userID = bundle.getInt(this.userId, 0);
+        this.chatID = bundle.getInt(this.chatId, 0);
 
         // Get a reference to the RecyclerView in the layout
         RecyclerView recyclerView = findViewById(R.id.recyclerViewChats);
@@ -85,22 +87,22 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
     }
 
     @Override
-    public void onChatClicked(int chatId) {
+    public void onChatClicked(int chatID) {
         Log.i(TAG, "onChatClicked");
 
         // Start the MessageActivity with the selected chat ID
         Intent intent = new Intent(this, MessageActivity.class);
-        intent.putExtra("chatIDKey", chatId);
+        intent.putExtra("chatId", chatID);
         this.startActivity(intent);
     }
 
     @Override
-    public void onChatLongClicked(int chatId) {
+    public void onChatLongClicked(int chatID) {
         Log.i(TAG, "onContactLongClicked");
 
         // Get an instance of ChatDao and retrieve the chat and bot name
         ChatDao chatDao = AppDatabase.getInstance(ChatActivity.this).getChatDao();
-        String botname = chatDao.getBotNameByChatId(chatId);
+        String botname = chatDao.getBotNameByChatId(chatID);
 
         // Create an AlertDialog to confirm the deletion of the chat
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -113,7 +115,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
                 Log.i(TAG, "Chat deleted");
 
                 // Delete the chat from the database
-                chatDao.delete(chatDao.getChat(chatId));
+                chatDao.delete(chatDao.getChat(chatID));
 
                 // Get the updated chat list and refresh the adapter
                 List<Chat> newList = chatDao.getChatById(userID);
@@ -148,7 +150,6 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
         ChatDao chatDao = db.getChatDao();
 
         Bundle bundle = getIntent().getExtras();
-        this.userID = bundle.getInt(this.userId, 0);
         this.btnConfig = findViewById(R.id.btnConfig);
         this.btnAddMsg = findViewById(R.id.btnAddMsg);
         this.btnChatLogout = findViewById(R.id.btnChatLogout);
@@ -177,6 +178,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ChatA
                 Intent intent = new Intent(ChatActivity.this, NewChatActivity.class);
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(ChatActivity.this).toBundle();
                 intent.putExtra("userId", userID);
+                intent.putExtra("chatId", chatID);
                 ChatActivity.this.startActivity(intent, bundle);
             }
         });
